@@ -1,0 +1,32 @@
+html {
+  height: 100%;
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 137%;
+  margin: auto;
+  background-color: #ff91de;
+  height: 95vh;
+}
+
+.introduction {
+  text-align: center;
+  font-size: 3rem;
+  text-transform: uppercase;
+  font-family: "Goldman", cursive;
+}
+
+#container {
+  padding-top: 3%;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.copyright {
+  position: absolute;
+  width: 98.7%;
+  height: 16px;
+  bottom: 0%;
+  text-align: center;
+}
