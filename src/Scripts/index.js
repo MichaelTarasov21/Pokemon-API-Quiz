@@ -11,13 +11,11 @@ import {
 } from "./generations.js";
 import "regenerator-runtime/runtime";
 
-async function searchPokemon() {
+async function searchPokemon(queryurl) {
   const response = await fetch(queryurl, ["GET"]);
   const pokemon = await response.json();
   return pokemon;
 }
-
-searchPokemon();
 
 DomSelectors.container.insertAdjacentHTML(
   "beforeend",
@@ -77,45 +75,60 @@ next.addEventListener("click", function (e) {
   if (document.getElementById(`check8`).checked) {
     generationsinplay = generationsinplay.concat(generation8Array);
   }
-  if (generationsinplay == 0){
-    alert(`You didn't pick one...`)
-  }else{
-    DomSelectors.container.querySelector('.selection').innerHTML = ""
-    DomSelectors.container.querySelector('.selection').insertAdjacentHTML('afterend', `<label class = "statement2">Pick a number from 1-${generationsinplay.length} which will be the amount of Pokémon that will be given to you!</label>
+  if (generationsinplay == 0) {
+    alert(`You didn't pick one...`);
+  } else {
+    DomSelectors.container.querySelector(".selection").innerHTML = "";
+    DomSelectors.container.querySelector(".selection").insertAdjacentHTML(
+      "afterend",
+      `<label class = "statement2">Pick a number from 1-${generationsinplay.length} which will be the amount of Pokémon that will be given to you!</label>
     <br>
     <br>
     <input type="number" min="1" max='${generationsinplay.length}' placeholder="Enter #" class="number"> 
     <br>
     <br>
-    <input type="submit" class="submitting" id="start" value="Start The Game">`)
-    const submit = document.getElementById('start')
-    submit.addEventListener("click", function() {
-      if (document.querySelector('.number').value > generationsinplay.length){
-        alert(`Its Greater than ${generationsinplay.length}!!!`)
-      }else if (document.querySelector('.number').value < 1){
-        alert("If you don't wanna play any questions you don't have to play")
-      }else{
-        startgame(document.querySelector('.number').value, generationsinplay);
+    <input type="submit" class="submitting" id="start" value="Start The Game">`
+    );
+    const submit = document.getElementById("start");
+    submit.addEventListener("click", function () {
+      if (document.querySelector(".number").value > generationsinplay.length) {
+        alert(`Its Greater than ${generationsinplay.length}!!!`);
+      } else if (document.querySelector(".number").value < 1) {
+        alert("If you don't wanna play any questions you don't have to play");
+      } else {
+        startgame(document.querySelector(".number").value, generationsinplay);
       }
-    })
+    });
   }
 });
-async function startgame(questionamount, pokedexnumbers){
-  for (let i = 1; i <= questionamount; i++ ){
-    const pokedexnumber = pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
-    let queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
-    DomSelectors.container.innerHTML = `[h1]Question ${i}[/h1]`
-    
-  };
+async function startgame(questionamount, pokedexnumbers) {
+  for (let i = 1; i <= questionamount; i++) {
+    const pokedexnumber =
+      pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
+    const queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
+    const pokemondata = await searchPokemon(queryurl);
+    console.log(pokemondata);
+    DomSelectors.container.innerHTML = `<h1>Question ${i}</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit">`;
+    let answersubmitted = false;
+    document.getElementById("submit").addEventListener(
+      "click",
+      function(){answersubmitted = true}
+    );
+    function waitforsubmit() {
+      if (!answersubmitted) {
+        waitforsubmit();
+      }
+      waitforsubmit();
+    }
+  }
 }
-
 
 /* add an event listener that will record the checked generations 
 new html that will record the amount of questions they want to do based on the generations they picked from 1 - 893
 add an event listener to record those questions
 begin the quiz
-______________________________________________ Done
 display quiz
+______________________________________________ Done
 show if they got it right
 if not then no
 if yes then yes
