@@ -16,7 +16,18 @@ async function searchPokemon(queryurl) {
   const pokemon = await response.json();
   return pokemon;
 }
-
+function waitforbuttonclick(id) {
+  let buttonnotpressed = true;
+  document.getElementById(id).addEventListener("click", function () {
+    buttonnotpressed = false;
+  });
+  function waitforpress() {
+    if (buttonnotpressed) {
+      waitforpress();
+    }
+  }
+  waitforpress();
+}
 DomSelectors.container.insertAdjacentHTML(
   "beforeend",
   `<div class="selection"> 
@@ -109,17 +120,7 @@ async function startgame(questionamount, pokedexnumbers) {
     const pokemondata = await searchPokemon(queryurl);
     console.log(pokemondata);
     DomSelectors.container.innerHTML = `<h1>Question ${i}</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit">`;
-    let answersubmitted = false;
-    document.getElementById("submit").addEventListener(
-      "click",
-      function(){answersubmitted = true}
-    );
-    function waitforsubmit() {
-      if (!answersubmitted) {
-        waitforsubmit();
-      }
-      waitforsubmit();
-    }
+    waitforbuttonclick('submit');
   }
 }
 
