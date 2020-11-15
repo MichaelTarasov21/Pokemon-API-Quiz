@@ -10,9 +10,6 @@ import {
   generation8Array,
 } from "./generations.js";
 import "regenerator-runtime/runtime";
-let pokedexnumber = Math.floor(Math.random() * 893 + 1);
-let queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
-let generationsinplay = [];
 
 async function searchPokemon() {
   const response = await fetch(queryurl, ["GET"]);
@@ -55,7 +52,7 @@ const next = document.getElementById("next");
 
 next.addEventListener("click", function (e) {
   e.preventDefault();
-  generationsinplay = [];
+  let generationsinplay = [];
   if (document.getElementById(`check1`).checked) {
     generationsinplay = generationsinplay.concat(generation1Array);
   }
@@ -103,8 +100,13 @@ next.addEventListener("click", function (e) {
     })
   }
 });
-function startgame(questionamount, pokedexnumbers){
-  console.log("Game Started")
+async function startgame(questionamount, pokedexnumbers){
+  for (let i = 1; i <= questionamount; i++ ){
+    const pokedexnumber = pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
+    let queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
+    DomSelectors.container.innerHTML = `[h1]Question ${i}[/h1]`
+    
+  };
 }
 
 
