@@ -37,6 +37,7 @@ DomSelectors.container.insertAdjacentHTML(
  <br> <input id="check8" type ="checkbox"> 
  <label class ="choice">Generation 8</label>
  <br>
+ <a href=https://github.com/PokeAPI/pokedex/issues>Warning: Generation 8 May have several bugs</a>
  <br>
  <input type="submit" class="submitting" id="next" value="Next">
  <br>
@@ -102,6 +103,7 @@ next.addEventListener("click", function (e) {
 });
 function startgame(questionamount, pokedexnumbers) {
   let i = 0;
+  let amountright = 0;
   let pokemondata;
   showquestion();
   async function showquestion() {
@@ -114,7 +116,7 @@ function startgame(questionamount, pokedexnumbers) {
       console.log(pokemondata.name);
       DomSelectors.container.innerHTML = `<h1>Question ${
         i
-      }</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit">`;
+      }</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit"><br><br><br><div id='counter'>You got ${amountright} out of ${i-1} correct</div>`;
       document
         .getElementById("submit")
         .addEventListener("click", showanswer);
@@ -122,8 +124,10 @@ function startgame(questionamount, pokedexnumbers) {
   }
   function showanswer() {
     const answer = document.getElementById("answer").value;
+    DomSelectors.container.innerHTML = ""
     if (answer.toLowerCase() === pokemondata.name) {
       console.log("answer good");
+      amountright = amountright + 1;
     } else {
       console.log("answer bad");
     }
