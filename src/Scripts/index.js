@@ -19,31 +19,31 @@ async function searchPokemon(queryurl) {
 DomSelectors.container.insertAdjacentHTML(
   "beforeend",
   `<div class="selection"> 
- <label class ="statement1">Choose the generations you would like to do!</label> 
- <br> <input id="check1" type ="checkbox"> 
- <label class ="choice">Generation 1</label>
- <br> <input id="check2" type ="checkbox"> 
- <label class ="choice">Generation 2</label> 
- <br> <input id="check3" type ="checkbox"> 
- <label class ="choice">Generation 3</label> 
- <br> <input id="check4" type ="checkbox"> 
- <label class ="choice">Generation 4</label> 
- <br> <input id="check5" type ="checkbox"> 
- <label class ="choice">Generation 5</label> 
- <br> <input id="check6" type ="checkbox"> 
- <label class ="choice">Generation 6</label> 
- <br> <input id="check7" type ="checkbox"> 
- <label class ="choice">Generation 7</label> 
- <br> <input id="check8" type ="checkbox"> 
- <label class ="choice">Generation 8</label>
- <br>
- <a href=https://github.com/PokeAPI/pokedex/issues>Warning: Generation 8 May have several bugs</a>
- <br>
- <input type="submit" class="submitting" id="next" value="Next">
- <br>
- <br> 
- <label class = "statement2" id="statement2"></label>
-</div>`
+  <label class ="statement1">Choose the generations you would like to do!</label> 
+  <br> <input id="check1" type ="checkbox"> 
+  <label class ="choice">Generation 1</label>
+  <br> <input id="check2" type ="checkbox"> 
+  <label class ="choice">Generation 2</label> 
+  <br> <input id="check3" type ="checkbox"> 
+  <label class ="choice">Generation 3</label> 
+  <br> <input id="check4" type ="checkbox"> 
+  <label class ="choice">Generation 4</label> 
+  <br> <input id="check5" type ="checkbox"> 
+  <label class ="choice">Generation 5</label> 
+  <br> <input id="check6" type ="checkbox"> 
+  <label class ="choice">Generation 6</label> 
+  <br> <input id="check7" type ="checkbox"> 
+  <label class ="choice">Generation 7</label> 
+  <br> <input id="check8" type ="checkbox"> 
+  <label class ="choice">Generation 8</label>
+  <br>
+  <a href=https://github.com/PokeAPI/pokedex/issues>Warning: Generation 8 May have several bugs</a>
+  <br>
+  <input type="submit" class="submitting" id="next" value="Next">
+  <br>
+  <br> 
+  <label class = "statement2" id="statement2"></label>
+  </div>`
 );
 
 const next = document.getElementById("next");
@@ -100,6 +100,10 @@ next.addEventListener("click", function (e) {
     });
   }
 });
+
+function reloadQuiz(){
+  location.reload()
+}
 function startgame(questionamount, pokedexnumbers) {
   let i = 0;
   let amountright = 0;
@@ -127,6 +131,10 @@ function startgame(questionamount, pokedexnumbers) {
       console.log(generationsinplay);
     } else {
       DomSelectors.container.innerHTML = `You got ${amountright} out of ${i} correct</div>`;
+      DomSelectors.container.insertAdjacentHTML(`beforeend`, `
+      <br><br>
+      <button id="try-again" type="button">Try Again?</button>`)
+      document.getElementById('try-again').addEventListener('click', reloadQuiz);
     }
   }
   function showanswer() {
