@@ -117,7 +117,7 @@ function startgame(questionamount, pokedexnumbers) {
       }</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit">`;
       document
         .getElementById("submit")
-        .addEventListener("click", showanswer(pokemondata));
+        .addEventListener("click", showanswer);
     }
   }
   function showanswer(pokemondata) {
