@@ -47,10 +47,9 @@ DomSelectors.container.insertAdjacentHTML(
 );
 
 const next = document.getElementById("next");
-
+let generationsinplay = [];
 next.addEventListener("click", function (e) {
   e.preventDefault();
-  let generationsinplay = [];
   if (document.getElementById(`check1`).checked) {
     generationsinplay = generationsinplay.concat(generation1Array);
   }
@@ -108,18 +107,19 @@ function startgame(questionamount, pokedexnumbers) {
   showquestion();
   async function showquestion() {
     if (i < questionamount) {
-      i = i + 1
-      const pokedexnumber =
-        pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
+      i++
+      const pokedexnumber = pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
       const queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
       pokemondata = await searchPokemon(queryurl);
       console.log(pokemondata.name);
-      DomSelectors.container.innerHTML = `<h1>Question ${
-        i
-      }</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit"><br><br><br><div id='counter'>You got ${amountright} out of ${i-1} correct</div>`;
-      document
-        .getElementById("submit")
-        .addEventListener("click", showanswer);
+      DomSelectors.container.innerHTML = `<h1>Question ${i}</h1><br><h2>What is the name of the pokémon with pokédex number ${pokedexnumber}?</h2>
+      <img class="pokemon" src="${pokemondata.sprites.front_default}">
+      <br><input type="text" placeholder="Pokémon Name" class="number" id="answer">
+      <br><input type="submit" class="submitting" id="submit" value="Submit"><br>
+      <br><br><div id='counter'>You got ${amountright} out of ${i-1} correct</div>`;
+      document.getElementById("submit").addEventListener("click", showanswer);
+    }else{
+      DomSelectors.container.innerHTML = `You got ${amountright} out of ${i} correct</div>`
     }
   }
   function showanswer() {
