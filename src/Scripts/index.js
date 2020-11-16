@@ -101,29 +101,33 @@ next.addEventListener("click", function (e) {
   }
 });
 function startgame(questionamount, pokedexnumbers) {
-  let i = 1;
+  let i = 0;
   showquestion();
-  async function showquestion(){
-  for (i <= questionamount; i++;) {
-    const pokedexnumber =
-      pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
-    const queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
-    const pokemondata = await searchPokemon(queryurl);
-    console.log(pokemondata);
-    DomSelectors.container.innerHTML = `<h1>Question ${i - 1}</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit">`;
-    document.getElementById('submit').addEventListener('click', showanswer(pokemondata))
-    break;
-  }
-  function showanswer(pokemondata){
-    const answer = document.getElementById('answer').value;
-    if (answer.toLowerCase() === pokemondata.name){
-      console.log("answer good")
-    } else {
-      console.log("answer bad")
+  console.log(questionamount)
+  async function showquestion() {
+    if (i < questionamount) {
+      i = i + 1
+      const pokedexnumber =
+        pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
+      const queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
+      const pokemondata = await searchPokemon(queryurl);
+      console.log(pokemondata);
+      DomSelectors.container.innerHTML = `<h1>Question ${
+        i
+      }</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit">`;
+      document
+        .getElementById("submit")
+        .addEventListener("click", showanswer(pokemondata));
     }
-    
   }
-  
+  function showanswer(pokemondata) {
+    const answer = document.getElementById("answer").value;
+    if (answer.toLowerCase() === pokemondata.name) {
+      console.log("answer good");
+    } else {
+      console.log("answer bad");
+    }
+    showquestion();
   }
 }
 
