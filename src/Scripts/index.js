@@ -118,6 +118,10 @@ function startgame(questionamount, pokedexnumbers) {
       <br><input type="submit" class="submitting" id="submit" value="Submit"><br>
       <br><br><div id='counter'>You got ${amountright} out of ${i-1} correct</div>`;
       document.getElementById("submit").addEventListener("click", showanswer);
+      console.log(generationsinplay)
+      let index = generationsinplay.indexOf(pokedexnumber)
+      generationsinplay.splice(index, 1)
+      console.log(generationsinplay)
     }else{
       DomSelectors.container.innerHTML = `You got ${amountright} out of ${i} correct</div>`
     }
