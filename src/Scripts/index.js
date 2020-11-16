@@ -16,6 +16,12 @@ async function searchPokemon(queryurl) {
   const pokemon = await response.json();
   return pokemon;
 }
+DomSelectors.container.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    const button = document.getElementsByClassName("submitting");
+    button[0].click();
+  }
+});
 DomSelectors.container.insertAdjacentHTML(
   "beforeend",
   `<div class="selection"> 
