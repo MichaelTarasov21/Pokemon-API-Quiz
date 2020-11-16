@@ -16,18 +16,6 @@ async function searchPokemon(queryurl) {
   const pokemon = await response.json();
   return pokemon;
 }
-function waitforbuttonclick(id) {
-  let buttonnotpressed = true;
-  document.getElementById(id).addEventListener("click", function () {
-    buttonnotpressed = false;
-  });
-  function waitforpress() {
-    if (buttonnotpressed) {
-      waitforpress();
-    }
-  }
-  waitforpress();
-}
 DomSelectors.container.insertAdjacentHTML(
   "beforeend",
   `<div class="selection"> 
@@ -112,15 +100,30 @@ next.addEventListener("click", function (e) {
     });
   }
 });
-async function startgame(questionamount, pokedexnumbers) {
-  for (let i = 1; i <= questionamount; i++) {
+function startgame(questionamount, pokedexnumbers) {
+  let i = 1;
+  showquestion();
+  async function showquestion(){
+  for (i <= questionamount; i++;) {
     const pokedexnumber =
       pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
     const queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
     const pokemondata = await searchPokemon(queryurl);
     console.log(pokemondata);
-    DomSelectors.container.innerHTML = `<h1>Question ${i}</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit">`;
-    waitforbuttonclick('submit');
+    DomSelectors.container.innerHTML = `<h1>Question ${i - 1}</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit">`;
+    document.getElementById('submit').addEventListener('click', showanswer(pokemondata))
+    break;
+  }
+  function showanswer(pokemondata){
+    const answer = document.getElementById('answer').value;
+    if (answer.toLowerCase() === pokemondata.name){
+      console.log("answer good")
+    } else {
+      console.log("answer bad")
+    }
+    
+  }
+  
   }
 }
 
