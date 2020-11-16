@@ -107,8 +107,9 @@ function startgame(questionamount, pokedexnumbers) {
   showquestion();
   async function showquestion() {
     if (i < questionamount) {
-      i++
-      const pokedexnumber = pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
+      i++;
+      const pokedexnumber =
+        pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
       const queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
       pokemondata = await searchPokemon(queryurl);
       console.log(pokemondata.name);
@@ -116,26 +117,28 @@ function startgame(questionamount, pokedexnumbers) {
       <img class="pokemon" src="${pokemondata.sprites.front_default}">
       <br><input type="text" placeholder="Pokémon Name" class="number" id="answer">
       <br><input type="submit" class="submitting" id="submit" value="Submit"><br>
-      <br><br><div id='counter'>You got ${amountright} out of ${i-1} correct</div>`;
+      <br><br><div id='counter'>You got ${amountright} out of ${
+        i - 1
+      } correct</div>`;
       document.getElementById("submit").addEventListener("click", showanswer);
-      console.log(generationsinplay)
-      let index = generationsinplay.indexOf(pokedexnumber)
-      generationsinplay.splice(index, 1)
-      console.log(generationsinplay)
-    }else{
-      DomSelectors.container.innerHTML = `You got ${amountright} out of ${i} correct</div>`
+      console.log(generationsinplay);
+      let index = generationsinplay.indexOf(pokedexnumber);
+      generationsinplay.splice(index, 1);
+      console.log(generationsinplay);
+    } else {
+      DomSelectors.container.innerHTML = `You got ${amountright} out of ${i} correct</div>`;
     }
   }
   function showanswer() {
     const answer = document.getElementById("answer").value;
-    DomSelectors.container.innerHTML = ""
+    DomSelectors.container.innerHTML = `<input type="submit" class="submitting" id="button" value="Next Question">`;
     if (answer.toLowerCase() === pokemondata.name) {
       console.log("answer good");
       amountright = amountright + 1;
     } else {
       console.log("answer bad");
     }
-    showquestion();
+    document.getElementById("button").addEventListener("click", showquestion);
   }
 }
 
