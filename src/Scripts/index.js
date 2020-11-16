@@ -102,16 +102,16 @@ next.addEventListener("click", function (e) {
 });
 function startgame(questionamount, pokedexnumbers) {
   let i = 0;
+  let pokemondata;
   showquestion();
-  console.log(questionamount)
   async function showquestion() {
     if (i < questionamount) {
       i = i + 1
       const pokedexnumber =
         pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
       const queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
-      const pokemondata = await searchPokemon(queryurl);
-      console.log(pokemondata);
+      pokemondata = await searchPokemon(queryurl);
+      console.log(pokemondata.name);
       DomSelectors.container.innerHTML = `<h1>Question ${
         i
       }</h1><br><h2>What is the name of the pokemon with pokedex number ${pokedexnumber}?</h2><br><input type="text" placeholder="Pokemon Name" class="number" id="answer"><br><input type="submit" class="submitting" id="submit" value="Submit">`;
@@ -120,7 +120,7 @@ function startgame(questionamount, pokedexnumbers) {
         .addEventListener("click", showanswer);
     }
   }
-  function showanswer(pokemondata) {
+  function showanswer() {
     const answer = document.getElementById("answer").value;
     if (answer.toLowerCase() === pokemondata.name) {
       console.log("answer good");
