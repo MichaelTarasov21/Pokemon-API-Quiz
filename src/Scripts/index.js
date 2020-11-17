@@ -18,9 +18,9 @@ async function searchPokemon(queryurl) {
 }
 DomSelectors.container.addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
-    const button = document.getElementsByClassName("submitting");
+    const button = document.getElementsByClassName("enter_submit");
     button[0].click();
-  }
+  } //When a key is pressed the function checks if it is the enter key and if it is the firt button on the page with class enter_submit is clicked.
 });
 DomSelectors.container.insertAdjacentHTML(
   "beforeend",
@@ -45,7 +45,7 @@ DomSelectors.container.insertAdjacentHTML(
   <br>
   <a href=https://github.com/PokeAPI/pokedex/issues>Warning: Generation 8 May have several bugs</a>
   <br>
-  <input type="submit" class="submitting" id="next" value="Next">
+  <input type="submit" class="enter_submit" id="next" value="Next">
   <br>
   <br> 
   <label class = "statement2" id="statement2"></label>
@@ -92,7 +92,7 @@ next.addEventListener("click", function (e) {
     <input type="number" min="1" max='${generationsinplay.length}' placeholder="Enter #" class="number"> 
     <br>
     <br>
-    <input type="submit" class="submitting" id="start" value="Start The Game">`
+    <input type="submit" class="enter_submit" id="start" value="Start The Game">`
     );
     const submit = document.getElementById("start");
     submit.addEventListener("click", function () {
@@ -117,7 +117,7 @@ function startgame(questionamount, pokedexnumbers) {
   showquestion();
   async function showquestion() {
     if (i < questionamount) {
-      DomSelectors.container.innerHTML = "Loding... Please Wait";//to prevent double clicking button
+      DomSelectors.container.innerHTML = "Loding... Please Wait"; //to prevent double clicking the button we added a loading screen
       i++;
       const pokedexnumber =
         pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
@@ -127,7 +127,7 @@ function startgame(questionamount, pokedexnumbers) {
       DomSelectors.container.innerHTML = `<h1>Question ${i}</h1><br><h2>What is the name of the pokémon with pokédex number ${pokedexnumber}?</h2>
       <img class="pokemon" src="${pokemondata.sprites.front_default}">
       <br><input type="text" placeholder="Pokémon Name" class="number" id="answer">
-      <br><input type="submit" class="submitting" id="submit" value="Submit"><br>
+      <br><input type="submit" class="enter_submit" id="submit" value="Submit"><br>
       <br><br><div id='counter'>You got ${amountright} out of ${
         i - 1
       } correct</div>`;
@@ -153,25 +153,13 @@ function startgame(questionamount, pokedexnumbers) {
     let identifier;
     if (answer.toLowerCase() === pokemondata.name) {
       amountright = amountright + 1;
-      sign = '✓';
-      identifier = 'checkmark';
-    }else {
-      sign = '✘';
-      identifier = 'crossmark';
+      sign = "✓";
+      identifier = "checkmark";
+    } else {
+      sign = "✘";
+      identifier = "crossmark";
     }
-    DomSelectors.container.innerHTML = `<div><h1 class="identifier" id="${identifier}">${sign}</h1></div><div><h2>Your answer: ${answer}</h2></div><div><h2>Correct answer: ${pokemondata.name}</h2></div><br><input type="submit" class="submitting" id="button" value="Next Question"><br><br><div id='counter'>You got ${amountright} out of ${i} correct</div>`;
+    DomSelectors.container.innerHTML = `<div><h1 class="identifier" id="${identifier}">${sign}</h1></div><div><h2>Your answer: ${answer}</h2></div><div><h2>Correct answer: ${pokemondata.name}</h2></div><br><input type="submit" id="button" value="Next Question"><br><br><div id='counter'>You got ${amountright} out of ${i} correct</div>`;
     document.getElementById("button").addEventListener("click", showquestion);
   }
 }
-
-/* add an event listener that will record the checked generations 
-new html that will record the amount of questions they want to do based on the generations they picked from 1 - 893
-add an event listener to record those questions
-begin the quiz
-display quiz
-______________________________________________ Done
-show if they got it right
-if not then no
-if yes then yes
-at the end, tell them they got it right
-also make sure that the pokemon doesnt get repeated */
