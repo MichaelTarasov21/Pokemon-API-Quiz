@@ -16,8 +16,8 @@ async function searchPokemon(queryurl) {
   const pokemon = await response.json();
   return pokemon;
 }
-DomSelectors.container.addEventListener('keypress', function (e) {
-  if (e.key === 'Enter') {
+DomSelectors.container.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
     const button = document.getElementsByClassName("submitting");
     button[0].click();
   }
@@ -107,8 +107,8 @@ next.addEventListener("click", function (e) {
   }
 });
 
-function reloadQuiz(){
-  location.reload()
+function reloadQuiz() {
+  location.reload();
 }
 function startgame(questionamount, pokedexnumbers) {
   let i = 0;
@@ -131,27 +131,34 @@ function startgame(questionamount, pokedexnumbers) {
         i - 1
       } correct</div>`;
       document.getElementById("submit").addEventListener("click", showanswer);
-      console.log(generationsinplay);
       let index = generationsinplay.indexOf(pokedexnumber);
       generationsinplay.splice(index, 1);
-      console.log(generationsinplay);
     } else {
       DomSelectors.container.innerHTML = `You got ${amountright} out of ${i} correct</div>`;
-      DomSelectors.container.insertAdjacentHTML(`beforeend`, `
+      DomSelectors.container.insertAdjacentHTML(
+        `beforeend`,
+        `
       <br><br>
-      <button id="try-again" type="button">Try Again?</button>`)
-      document.getElementById('try-again').addEventListener('click', reloadQuiz);
+      <button id="try-again" type="button">Try Again?</button>`
+      );
+      document
+        .getElementById("try-again")
+        .addEventListener("click", reloadQuiz);
     }
   }
   function showanswer() {
     const answer = document.getElementById("answer").value;
-    DomSelectors.container.innerHTML = `<input type="submit" class="submitting" id="button" value="Next Question">`;
+    let sign;
+    let identifier;
     if (answer.toLowerCase() === pokemondata.name) {
-      console.log("answer good");
       amountright = amountright + 1;
-    } else {
-      console.log("answer bad");
+      sign = '✓';
+      identifier = 'checkmark';
+    }else {
+      sign = '✘';
+      identifier = 'crossmark';
     }
+    DomSelectors.container.innerHTML = `<div><h1 class="identifier" id="${identifier}">${sign}</h1></div><div><h2>Your answer: ${answer}</h2></div><div><h2>Correct answer: ${pokemondata.name}</h2></div><br><input type="submit" class="submitting" id="button" value="Next Question"><br><br><div id='counter'>You got ${amountright} out of ${i} correct</div>`;
     document.getElementById("button").addEventListener("click", showquestion);
   }
 }
