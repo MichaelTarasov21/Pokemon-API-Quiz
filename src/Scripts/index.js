@@ -117,6 +117,7 @@ function startgame(questionamount, pokedexnumbers) {
   showquestion();
   async function showquestion() {
     if (i < questionamount) {
+      DomSelectors.container.innerHTML = "Loding... Please Wait";//to prevent double clicking button
       i++;
       const pokedexnumber =
         pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
