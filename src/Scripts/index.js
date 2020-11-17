@@ -94,6 +94,7 @@ next.addEventListener("click", function (e) {
     <br>
     <input type="submit" class="enter_submit" id="start" value="Start The Game">`
     );
+    document.querySelector(".number").select();
     const submit = document.getElementById("start");
     submit.addEventListener("click", function () {
       if (document.querySelector(".number").value > generationsinplay.length) {
@@ -121,6 +122,8 @@ function startgame(questionamount, pokedexnumbers) {
       i++;
       const pokedexnumber =
         pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
+      let index = generationsinplay.indexOf(pokedexnumber);//prevents pokemon from repeating
+      generationsinplay.splice(index, 1);
       const queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
       pokemondata = await searchPokemon(queryurl);
       console.log(pokemondata.name);
@@ -132,8 +135,7 @@ function startgame(questionamount, pokedexnumbers) {
         i - 1
       } correct</div>`;
       document.getElementById("submit").addEventListener("click", showanswer);
-      let index = generationsinplay.indexOf(pokedexnumber);
-      generationsinplay.splice(index, 1);
+      document.getElementById("answer").select();
     } else {
       DomSelectors.container.innerHTML = `You got ${amountright} out of ${i} correct</div>`;
       DomSelectors.container.insertAdjacentHTML(
