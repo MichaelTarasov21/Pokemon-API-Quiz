@@ -45,3 +45,31 @@ body {
 #crossmark{
   color: red;
 }
+
+.search{
+  margin: auto;
+}
+
+.pokedex-name{
+  left: 2%;
+  position: absolute;
+  min-width: 900px; 
+}
+
+.pokedex-number{
+  left: 2%;
+  top: 150px;
+  position: absolute;
+  min-width: 900px;
+}
+
+.pokedex-pokemon{
+  right: 40%;
+  position: relative;
+  min-width: 900px;
+  height: 80%;
+}
+
+.pokemon-data-name{
+  text-transform: capitalize;
+}

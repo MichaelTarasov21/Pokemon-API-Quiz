@@ -1,5 +1,5 @@
-import { DomSelectors } from "./DomSelectors.js";
-import {
+import { DomSelectors } from "./DomSelectors.js"; //imports an object from ./DomSelectors.js to make the code smaller
+import { //imports arrays from ./generations.js to make the code smaller
   generation1Array,
   generation2Array,
   generation3Array,
@@ -11,20 +11,21 @@ import {
 } from "./generations.js";
 import "regenerator-runtime/runtime";
 
-async function searchPokemon(queryurl) {
-  const response = await fetch(queryurl, ["GET"]);
+async function searchPokemon(queryurl) {//grabing the api, and then turning the api in a json, then we return it
+  const response = await fetch(queryurl, ["GET"]);//await means that it waits for the api to load before loading
   const pokemon = await response.json();
   return pokemon;
 }
+
 DomSelectors.container.addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     const button = document.getElementsByClassName("enter_submit");
     button[0].click();
   } //When a key is pressed the function checks if it is the enter key and if it is the firt button on the page with class enter_submit is clicked.
 });
-DomSelectors.container.insertAdjacentHTML(
-  "beforeend",
-  `<div class="selection"> 
+DomSelectors.container.insertAdjacentHTML(//insertAdjacentHTML allows us to put HTML on top of the HTML we already created
+  "beforeend",//beforeend is used instead of beforeafter because the html will be inserted at the bottom, meaning that all subsequent elements and blocks will also be at the bottom which makes it look like how it normally does it a normal HTML file while beforebegin will comepletely reverse how we wrote it.
+  `<div class="selection">
   <label class ="statement1">Choose the generations you would like to do!</label> 
   <br> <input id="check1" type ="checkbox"> 
   <label class ="choice">Generation 1</label>
@@ -52,11 +53,10 @@ DomSelectors.container.insertAdjacentHTML(
   </div>`
 );
 
-const next = document.getElementById("next");
-let generationsinplay = [];
-next.addEventListener("click", function (e) {
-  e.preventDefault();
-  if (document.getElementById(`check1`).checked) {
+let generationsinplay = [];// creates an array
+document.getElementById("next").addEventListener("click", function (e) {//listens for a click when user clicks on a specific element, in this case, its a button called "next"
+  e.preventDefault();//prevents page from reloading
+  if (document.getElementById(`check1`).checked) {//inserts values into our generationsinPlay array from the generations.js file if their checkbox was selected
     generationsinplay = generationsinplay.concat(generation1Array);
   }
   if (document.getElementById(`check2`).checked) {
@@ -80,13 +80,14 @@ next.addEventListener("click", function (e) {
   if (document.getElementById(`check8`).checked) {
     generationsinplay = generationsinplay.concat(generation8Array);
   }
-  if (generationsinplay == 0) {
+  if (generationsinplay == 0) {//prevents the quiz from starting if they didnt check a box.
     alert(`You didn't pick one...`);
   } else {
-    DomSelectors.container.querySelector(".selection").innerHTML = "";
-    DomSelectors.container.querySelector(".selection").insertAdjacentHTML(
+    DomSelectors.container.querySelector(".selection").innerHTML = "";//completely wipes out the entire html in the div "container"
+    DomSelectors.container.querySelector(".selection").insertAdjacentHTML(//puts in new HTML
       "afterend",
-      `<label class = "statement2">Pick a number from 1-${generationsinplay.length} which will be the amount of Pokémon that will be given to you!</label>
+      `<label class = "statement2">Pick a number from 1-${generationsinplay.length} which will be the amount of Pokémon that will be given to you!
+      </label>
     <br>
     <br>
     <input type="number" min="1" max='${generationsinplay.length}' placeholder="Enter #" class="number"> 
@@ -96,47 +97,47 @@ next.addEventListener("click", function (e) {
     );
     document.querySelector(".number").select();
     const submit = document.getElementById("start");
-    submit.addEventListener("click", function () {
-      if (document.querySelector(".number").value > generationsinplay.length) {
+    submit.addEventListener("click", function () {//listens for the submit button to be clicked, and if it does, use the function which will be created on the spot
+      if (document.querySelector(".number").value > generationsinplay.length) {//If they put a number greater than what was intended, the quiz won't start and they'll be warned
         alert(`Its Greater than ${generationsinplay.length}!!!`);
-      } else if (document.querySelector(".number").value < 1) {
+      } else if (document.querySelector(".number").value < 1) {//If they put a number less than intended, the quiz won't start and will also warn them
         alert("If you don't wanna play any questions you don't have to play");
       } else {
-        startgame(document.querySelector(".number").value, generationsinplay);
+        startgame(document.querySelector(".number").value, generationsinplay);//starts quiz, saving the parameters to the function below(line 115)
       }
     });
   }
 });
 
-function reloadQuiz() {
+function reloadQuiz() {//reloads the site
   location.reload();
 }
 function startgame(questionamount, pokedexnumbers) {
   let i = 0;
   let amountright = 0;
   let pokemondata;
-  showquestion();
+  showquestion();//call the async function
   async function showquestion() {
-    if (i < questionamount) {
+    if (i < questionamount) {//If the question is less than the total questions
       DomSelectors.container.innerHTML = "Loding... Please Wait"; //to prevent double clicking the button we added a loading screen
-      i++;
+      i++;//increase the question counter by 1
       const pokedexnumber =
-        pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];
-      let index = generationsinplay.indexOf(pokedexnumber);//prevents pokemon from repeating
-      generationsinplay.splice(index, 1);
-      const queryurl = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;
-      pokemondata = await searchPokemon(queryurl);
-      console.log(pokemondata.name);
+        pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)];//randomized the pokemon sent out to the quiz(lines 106 and 115)
+      let index = generationsinplay.indexOf(pokedexnumber);//indexof records the actual value of the randomized pokemon number of the array, not the element
+      generationsinplay.splice(index, 1);//we are calling the array and splice gets rid of the value listed as that of the random pokedex number in the array, 1 is the amount in the array we are removing
+      const queryURL = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`;//calling the api using a random number
+      pokemondata = await searchPokemon(queryURL);//waits for the api to load 
+      console.log(pokemondata.name);//log the pokemon's name
       DomSelectors.container.innerHTML = `<h1>Question ${i}</h1><br><h2>What is the name of the pokémon with pokédex number ${pokedexnumber}?</h2>
       <img class="pokemon" src="${pokemondata.sprites.front_default}">
       <br><input type="text" placeholder="Pokémon Name" class="number" id="answer">
       <br><input type="submit" class="enter_submit" id="submit" value="Submit"><br>
       <br><br><div id='counter'>You got ${amountright} out of ${
         i - 1
-      } correct</div>`;
-      document.getElementById("submit").addEventListener("click", showanswer);
+      } correct</div>`;//we ask the question, using the random pokemon number as the pokedex number, getting the image from the api's array, and recording the amount they got right. 
+      document.getElementById("submit").addEventListener("click", showanswer);//calls the function when u hit the submit which is in the scope
       document.getElementById("answer").select();
-    } else {
+    } else {//if the questionnumber is equal to the questions they inputted, we show the results screen showing what they got right and wrong, and let them try again.
       DomSelectors.container.innerHTML = `You got ${amountright} out of ${i} correct</div>`;
       DomSelectors.container.insertAdjacentHTML(
         `beforeend`,
@@ -144,24 +145,22 @@ function startgame(questionamount, pokedexnumbers) {
       <br><br>
       <button id="try-again" type="button">Try Again?</button>`
       );
-      document
-        .getElementById("try-again")
-        .addEventListener("click", reloadQuiz);
+      document.getElementById("try-again").addEventListener("click", reloadQuiz);//if they hit try again, reloads the page(line 112)
     }
   }
   function showanswer() {
-    const answer = document.getElementById("answer").value;
+    const answer = document.getElementById("answer").value;//gets the string that the user inputted
     let sign;
     let identifier;
-    if (answer.toLowerCase() === pokemondata.name) {
+    if (answer.toLowerCase() === pokemondata.name) {//if the string all lowercased is equal to the name of the pokemon from the api, they get it right and one point is added
       amountright = amountright + 1;
       sign = "✓";
       identifier = "checkmark";
-    } else {
+    } else {//if the string isn't equal to it, it'ss wrong
       sign = "✘";
       identifier = "crossmark";
     }
-    DomSelectors.container.innerHTML = `<div><h1 class="identifier" id="${identifier}">${sign}</h1></div><div><h2>Your answer: ${answer}</h2></div><div><h2>Correct answer: ${pokemondata.name}</h2></div><br><input type="submit" id="button" value="Next Question"><br><br><div id='counter'>You got ${amountright} out of ${i} correct</div>`;
-    document.getElementById("button").addEventListener("click", showquestion);
+    DomSelectors.container.innerHTML = `<div><h1 class="identifier" id="${identifier}">${sign}</h1></div><div><h2>Your answer: ${answer}</h2></div><div><h2 class="pokemon-data-name">Correct answer: ${pokemondata.name}</h2></div><br><input type="submit" id="button" value="Next Question"><br><br><div id='counter'>You got ${amountright} out of ${i} correct</div>`;
+    document.getElementById("button").addEventListener("click", showquestion);//shows them the answer, and if the click the button, it calls another function(line 120) which moves them to the next question
   }
 }
