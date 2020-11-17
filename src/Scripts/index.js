@@ -145,7 +145,7 @@ function startgame(questionamount, pokedexnumbers) {
       generationsinplay.splice(index, 1); //we are calling the array and splice gets rid of the value listed as that of the random pokedex number in the array, 1 is the amount in the array we are removing
       const queryURL = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`; //calling the api using a random number
       pokemondata = await searchPokemon(queryURL); //waits for the api to load
-      console.log(pokemondata.name); //log the pokemon's name
+      console.log(pokemondata.name); //log the pokemon's name (used for testing will be cut out)
       DomSelectors.container.innerHTML = `<h1>Question ${i}</h1><br><h2>What is the name of the pokémon with pokédex number ${pokedexnumber}?</h2>
       <img class="pokemon" src="${pokemondata.sprites.front_default}">
       <br><input type="text" placeholder="Pokémon Name" class="number" id="answer">
