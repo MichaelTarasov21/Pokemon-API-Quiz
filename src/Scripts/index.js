@@ -222,7 +222,7 @@ async function showPokedex() {
     <span class="search">🔍</span>
     <br>
     <div class="pokedex-entry">
-      <div class="pokedex-name">Pokémon Name: Bulbasaur</div>
+      <div class="pokedex-name">Pokémon Name: ${pokedexdata.name}</div>
       <div class="pokedex-number">Pokedéx Number: ${pokemonNumber}</div>
       <div id="pagebuttons" class="pagination">
       </div>
