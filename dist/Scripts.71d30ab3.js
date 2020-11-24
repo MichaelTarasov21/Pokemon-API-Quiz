@@ -982,14 +982,16 @@ function _searchPokemon() {
   return _searchPokemon.apply(this, arguments);
 }
 
+var pokemonNumber = 1;
+
 function mainMenu() {
   _DomSelectors.DomSelectors.menu.innerHTML = "";
   _DomSelectors.DomSelectors.container.innerHTML = "";
 
   _DomSelectors.DomSelectors.menu.insertAdjacentHTML("beforeend", "\n  <button class=\"decision\" id=\"quiz-option\">Quiz</button>\n  <button class=\"decision\" id=\"pokedex-option\">Pok\xE9dex</button>");
 
-  document.getElementById("quiz-option").addEventListener('click', quiz);
-  document.getElementById("pokedex-option").addEventListener('click', showPokedex);
+  document.getElementById("quiz-option").addEventListener("click", quiz);
+  document.getElementById("pokedex-option").addEventListener("click", showPokedex);
 }
 
 function quiz() {
@@ -1138,8 +1140,8 @@ function quiz() {
 
                 _DomSelectors.DomSelectors.menu.insertAdjacentHTML("beforeend", "\n        <button class=\"decision\" id=\"quiz-option\">Quiz</button>\n        <button class=\"decision\" id=\"pokedex-option\">Pok\xE9dex</button>");
 
-                document.getElementById("quiz-option").addEventListener('click', quiz);
-                document.getElementById("pokedex-option").addEventListener('click', showPokedex);
+                document.getElementById("quiz-option").addEventListener("click", quiz);
+                document.getElementById("pokedex-option").addEventListener("click", showPokedex);
 
               case 22:
               case "end":
@@ -1174,29 +1176,47 @@ function quiz() {
   }
 }
 
+function next() {
+  pokemonNumber = pokemonNumber + 1;
+  showPokedex();
+}
+
+function previous() {
+  pokemonNumber = pokemonNumber - 1;
+  showPokedex();
+}
+
 function showPokedex() {
   return _showPokedex.apply(this, arguments);
 }
 
 function _showPokedex() {
   _showPokedex = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-    var pokemonNumber, queryURL, pokedexdata;
+    var queryURL, pokedexdata;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            pokemonNumber = 1;
             queryURL = "https://pokeapi.co/api/v2/pokemon/".concat(pokemonNumber);
+            console.log(queryURL);
             _context3.next = 4;
             return searchPokemon(queryURL);
 
           case 4:
             pokedexdata = _context3.sent;
-            _DomSelectors.DomSelectors.container.innerHTML = "";
+            _DomSelectors.DomSelectors.container.innerHTML = "<div id=\"pokedex\">Pok\xE9dex</div>\n  <div class=\"search-pokedex\">\n    <input type=\"text\">\n    <span class=\"search\">\uD83D\uDD0D</span>\n    <br>\n    <div class=\"pokedex-entry\">\n      <div class=\"pokedex-name\">Pok\xE9mon Name: Bulbasaur</div>\n      <div class=\"pokedex-number\">Poked\xE9x Number: ".concat(pokemonNumber, "</div>\n      <div id=\"pagebuttons\" class=\"pagination\">\n      </div>\n      <img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/").concat(pokemonNumber, ".png\" class=\"pokedex-pokemon\">\n      <div class=\"stats\">\n        <div class=\"row1\">\n          <div id=\"hp\">HP: ").concat(pokedexdata.stats[0].base_stat, "</div>\n          <div id=\"specialatk\">SPATK: ").concat(pokedexdata.stats[3].base_stat, "</div>\n        </div>\n        <div class=\"row2\">\n          <div id=\"atk\">ATK: ").concat(pokedexdata.stats[1].base_stat, "</div>\n          <div id=\"specialdef\">SPDEF:").concat(pokedexdata.stats[4].base_stat, "</div>\n        </div>\n        <div class=\"row3\">\n          <div id=\"def\">DEF: ").concat(pokedexdata.stats[2].base_stat, "</div>\n          <div id=\"spd\">SPD: ").concat(pokedexdata.stats[5].base_stat, "</div>\n        </div>\n      </div>\n      <div class=\"weight\">Weight: ").concat(pokedexdata.weight, "</div>\n    </div>\n  </div>\n  </div>");
 
-            _DomSelectors.DomSelectors.container.insertAdjacentHTML('beforeend', "<div id=\"pokedex\">Pok\xE9dex</div>\n  <form class=\"search-pokedex\">\n    <input type=\"text\">\n    <span class=\"search\">\uD83D\uDD0D</span>\n    <br>\n    <div class=\"pokedex-entry\">\n      <div class=\"pokedex-name\">Pok\xE9mon Name: Bulbasaur</div>\n      <div class=\"pokedex-number\">Poked\xE9x Number: ".concat(pokemonNumber, "</div>\n      <div class=\"pagination\">\n        <button class=\"page\" id=\"previous\">previous</button>\n        <button class=\"page\" id=\"next\">next</button>\n      </div>\n      <img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png\" class=\"pokedex-pokemon\">\n      <div class=\"stats\">\n        <div class=\"row1\">\n          <div id=\"hp\">HP: ").concat(pokedexdata.stats[0].base_stat, "</div>\n          <div id=\"specialatk\">SPATK: ").concat(pokedexdata.stats[3].base_stat, "</div>\n        </div>\n        <div class=\"row2\">\n          <div id=\"atk\">ATK: ").concat(pokedexdata.stats[1].base_stat, "</div>\n          <div id=\"specialdef\">SPDEF:").concat(pokedexdata.stats[4].base_stat, "</div>\n        </div>\n        <div class=\"row3\">\n          <div id=\"def\">DEF: ").concat(pokedexdata.stats[2].base_stat, "</div>\n          <div id=\"spd\">SPD: ").concat(pokedexdata.stats[5].base_stat, "</div>\n        </div>\n      </div>\n      <div class=\"weight\">Weight: ").concat(pokedexdata.weight, "</div>\n    </div>\n  </div>\n  </form>"));
+            if (pokemonNumber !== 1) {
+              document.getElementById("pagebuttons").insertAdjacentHTML("afterbegin", "<button class=\"page\" id=\"previous\">previous</button>");
+              document.getElementById('previous').addEventListener('click', previous);
+            }
 
-          case 7:
+            if (pokemonNumber !== 893) {
+              document.getElementById("pagebuttons").insertAdjacentHTML("beforeend", "<button class=\"page\" id=\"next\">next</button>");
+              document.getElementById('next').addEventListener('click', next);
+            }
+
+          case 8:
           case "end":
             return _context3.stop();
         }
@@ -1235,7 +1255,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59426" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56727" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
