@@ -228,7 +228,7 @@ function searchValue() {
 async function showPokedex() {
   let queryURL = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`;
   let pokedexdata = await searchPokemon(queryURL);
-  DomSelectors.search_pokedex.innerHTML = `<div id="pokedex">Pokédex</div>
+  DomSelectors.container.innerHTML = `<div id="pokedex">Pokédex</div>
     <input class="input" type="text">
     <span class="search">🔍</span>
     <br>
