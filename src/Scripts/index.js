@@ -202,19 +202,19 @@ function quiz() {
     }
   }
 }
-function next(){
-  DomSelectors.container.innerHTML = "Loading please wait"
-pokemonNumber = pokemonNumber + 1
-showPokedex();
+function next() {
+  DomSelectors.container.innerHTML = "Loading please wait";
+  pokemonNumber = pokemonNumber + 1;
+  showPokedex();
 }
-function previous(){
-  DomSelectors.container.innerHTML = "Loading please wait"
-pokemonNumber =pokemonNumber - 1
-showPokedex();
+function previous() {
+  DomSelectors.container.innerHTML = "Loading please wait";
+  pokemonNumber = pokemonNumber - 1;
+  showPokedex();
 }
 async function showPokedex() {
   let queryURL = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`;
-  console.log(queryURL)
+  console.log(queryURL);
   let pokedexdata = await searchPokemon(queryURL);
   DomSelectors.container.innerHTML = `<div id="pokedex">Pokédex</div>
   <div class="search-pokedex">
@@ -252,7 +252,7 @@ async function showPokedex() {
         "afterbegin",
         `<button class="page" id="previous">previous</button>`
       );
-    document.getElementById('previous').addEventListener('click', previous)
+    document.getElementById("previous").addEventListener("click", previous);
   }
   if (pokemonNumber !== 893) {
     document
@@ -261,8 +261,7 @@ async function showPokedex() {
         "beforeend",
         `<button class="page" id="next">next</button>`
       );
-      document.getElementById('next').addEventListener('click', next)
-  
+    document.getElementById("next").addEventListener("click", next);
   }
 }
 mainMenu();
