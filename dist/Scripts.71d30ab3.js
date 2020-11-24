@@ -126,7 +126,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.DomSelectors = void 0;
 var DomSelectors = {
   body: document.body,
-  container: document.getElementById("container")
+  container: document.getElementById("container"),
+  menu: document.querySelector(".menu")
 };
 exports.DomSelectors = DomSelectors;
 },{}],"Scripts/generations.js":[function(require,module,exports) {
@@ -981,184 +982,231 @@ function _searchPokemon() {
   return _searchPokemon.apply(this, arguments);
 }
 
-_DomSelectors.DomSelectors.container.addEventListener("keypress", function (e) {
-  if (e.key === "Enter") {
-    var button = document.getElementsByClassName("enter_submit");
-    button[0].click();
-  } //When a key is pressed the function checks if it is the enter key and if it is the firt button on the page with class enter_submit is clicked.
+function mainMenu() {
+  _DomSelectors.DomSelectors.menu.innerHTML = "";
+  _DomSelectors.DomSelectors.container.innerHTML = "";
 
-});
+  _DomSelectors.DomSelectors.menu.insertAdjacentHTML("beforeend", "\n  <button class=\"decision\" id=\"quiz-option\">Quiz</button>\n  <button class=\"decision\" id=\"pokedex-option\">Pok\xE9dex</button>");
 
-_DomSelectors.DomSelectors.container.insertAdjacentHTML( //insertAdjacentHTML allows us to put HTML on top of the HTML we already created
-"beforeend", //beforeend is used instead of beforeafter because the html will be inserted at the bottom, meaning that all subsequent elements and blocks will also be at the bottom which makes it look like how it normally does it a normal HTML file while beforebegin will comepletely reverse how we wrote it.
-"<div class=\"selection\">\n  <label class =\"statement1\">Choose the generations you would like to do!</label> \n  <br> <input id=\"check1\" type =\"checkbox\"> \n  <label class =\"choice\">Generation 1</label>\n  <br> <input id=\"check2\" type =\"checkbox\"> \n  <label class =\"choice\">Generation 2</label> \n  <br> <input id=\"check3\" type =\"checkbox\"> \n  <label class =\"choice\">Generation 3</label> \n  <br> <input id=\"check4\" type =\"checkbox\"> \n  <label class =\"choice\">Generation 4</label> \n  <br> <input id=\"check5\" type =\"checkbox\"> \n  <label class =\"choice\">Generation 5</label> \n  <br> <input id=\"check6\" type =\"checkbox\"> \n  <label class =\"choice\">Generation 6</label> \n  <br> <input id=\"check7\" type =\"checkbox\"> \n  <label class =\"choice\">Generation 7</label> \n  <br> <input id=\"check8\" type =\"checkbox\"> \n  <label class =\"choice\">Generation 8</label>\n  <br>\n  <a href=https://github.com/PokeAPI/pokedex/issues>Warning: Generation 8 May have several bugs</a>\n  <br>\n  <input type=\"submit\" class=\"enter_submit\" id=\"next\" value=\"Next\">\n  <br>\n  <br> \n  <label class = \"statement2\" id=\"statement2\"></label>\n  </div>");
-
-var generationsinplay = []; // creates an array
-
-document.getElementById("next").addEventListener("click", function (e) {
-  //listens for a click when user clicks on a specific element, in this case, its a button called "next"
-  e.preventDefault(); //prevents page from reloading
-
-  if (document.getElementById("check1").checked) {
-    //inserts values into our generationsinPlay array from the generations.js file if their checkbox was selected
-    generationsinplay = generationsinplay.concat(_generations.generation1Array);
-  }
-
-  if (document.getElementById("check2").checked) {
-    generationsinplay = generationsinplay.concat(_generations.generation2Array);
-  }
-
-  if (document.getElementById("check3").checked) {
-    generationsinplay = generationsinplay.concat(_generations.generation3Array);
-  }
-
-  if (document.getElementById("check4").checked) {
-    generationsinplay = generationsinplay.concat(_generations.generation4Array);
-  }
-
-  if (document.getElementById("check5").checked) {
-    generationsinplay = generationsinplay.concat(_generations.generation5Array);
-  }
-
-  if (document.getElementById("check6").checked) {
-    generationsinplay = generationsinplay.concat(_generations.generation6Array);
-  }
-
-  if (document.getElementById("check7").checked) {
-    generationsinplay = generationsinplay.concat(_generations.generation7Array);
-  }
-
-  if (document.getElementById("check8").checked) {
-    generationsinplay = generationsinplay.concat(_generations.generation8Array);
-  }
-
-  if (generationsinplay == 0) {
-    //prevents the quiz from starting if they didnt check a box.
-    alert("You didn't pick one...");
-  } else {
-    _DomSelectors.DomSelectors.container.querySelector(".selection").innerHTML = ""; //completely wipes out the entire html in the div "container"
-
-    _DomSelectors.DomSelectors.container.querySelector(".selection").insertAdjacentHTML( //puts in new HTML
-    "afterend", "<label class = \"statement2\">Pick a number from 1-".concat(generationsinplay.length, " which will be the amount of Pok\xE9mon that will be given to you!\n      </label>\n    <br>\n    <br>\n    <input type=\"number\" min=\"1\" max='").concat(generationsinplay.length, "' placeholder=\"Enter #\" class=\"number\"> \n    <br>\n    <br>\n    <input type=\"submit\" class=\"enter_submit\" id=\"start\" value=\"Start The Game\">"));
-
-    document.querySelector(".number").select();
-    var submit = document.getElementById("start");
-    submit.addEventListener("click", function () {
-      //listens for the submit button to be clicked, and if it does, use the function which will be created on the spot
-      var questionsrequested = document.querySelector(".number").value;
-      var numquestions = parseInt(questionsrequested);
-
-      if (questionsrequested != numquestions) {
-        //checks if the input given is the same as the input without parts that are not present in an interger
-        alert("Please enter a whole number for the amount of questions that you want to play");
-      } else if (numquestions > generationsinplay.length) {
-        //If they put a number greater than what was intended, the quiz won't start and they'll be warned
-        alert("Its Greater than ".concat(generationsinplay.length, "!!!"));
-      } else if (numquestions < 1) {
-        //If they put a number less than intended, the quiz won't start and will also warn them
-        alert("If you don't wanna play any questions you don't have to play");
-      } else {
-        startgame(numquestions, generationsinplay); //starts quiz, saving the parameters to the function below(line 115)
-      }
-    });
-  }
-});
-
-function reloadQuiz() {
-  //reloads the site
-  location.reload();
+  document.getElementById("quiz-option").addEventListener('click', quiz);
+  document.getElementById("pokedex-option").addEventListener('click', showPokedex);
 }
 
-function startgame(questionamount, pokedexnumbers) {
-  var i = 0;
-  var amountright = 0;
-  var pokemondata;
-  showquestion(); //call the async function
+function quiz() {
+  _DomSelectors.DomSelectors.container.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      var button = document.getElementsByClassName("enter_submit");
+      button[0].click();
+    } //When a key is pressed the function checks if it is the enter key and if it is the firt button on the page with class enter_submit is clicked.
 
-  function showquestion() {
-    return _showquestion.apply(this, arguments);
-  }
+  });
 
-  function _showquestion() {
-    _showquestion = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      var pokedexnumber, index, queryURL;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (!(i < questionamount)) {
-                _context.next = 16;
-                break;
-              }
+  _DomSelectors.DomSelectors.container.innerHTML = "";
 
-              //If the question is less than the total questions
-              _DomSelectors.DomSelectors.container.innerHTML = "Loding... Please Wait"; //to prevent double clicking the button we added a loading screen
+  _DomSelectors.DomSelectors.container.insertAdjacentHTML( //insertAdjacentHTML allows us to put HTML on top of the HTML we already created
+  "beforeend", //beforeend is used instead of beforeafter because the html will be inserted at the bottom, meaning that all subsequent elements and blocks will also be at the bottom which makes it look like how it normally does it a normal HTML file while beforebegin will comepletely reverse how we wrote it.
+  "<div class=\"selection\">\n    <label class =\"statement1\">Choose the generations you would like to do!</label> \n    <br> <input id=\"check1\" type =\"checkbox\"> \n    <label class =\"choice\">Generation 1</label>\n    <br> <input id=\"check2\" type =\"checkbox\"> \n    <label class =\"choice\">Generation 2</label> \n    <br> <input id=\"check3\" type =\"checkbox\"> \n    <label class =\"choice\">Generation 3</label> \n    <br> <input id=\"check4\" type =\"checkbox\"> \n    <label class =\"choice\">Generation 4</label> \n    <br> <input id=\"check5\" type =\"checkbox\"> \n    <label class =\"choice\">Generation 5</label> \n    <br> <input id=\"check6\" type =\"checkbox\"> \n    <label class =\"choice\">Generation 6</label> \n    <br> <input id=\"check7\" type =\"checkbox\"> \n    <label class =\"choice\">Generation 7</label> \n    <br> <input id=\"check8\" type =\"checkbox\"> \n    <label class =\"choice\">Generation 8</label>\n    <br>\n    <a href=https://github.com/PokeAPI/pokedex/issues>Warning: Generation 8 May have several bugs</a>\n    <br>\n    <input type=\"submit\" class=\"enter_submit\" id=\"next\" value=\"Next\">\n    <br>\n    <br> \n    <label class = \"statement2\" id=\"statement2\"></label>\n    </div>");
 
-              i++; //increase the question counter by 1
+  var generationsSelected = []; // creates an array
 
-              pokedexnumber = pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)]; //randomized the pokemon sent out to the quiz(lines 106 and 115)
+  document.getElementById("next").addEventListener("click", function (e) {
+    //listens for a click when user clicks on a specific element, in this case, its a button called "next"
+    e.preventDefault(); //prevents page from reloading
 
-              index = generationsinplay.indexOf(pokedexnumber); //indexof records the actual value of the randomized pokemon number of the array, not the element
-
-              generationsinplay.splice(index, 1); //we are calling the array and splice gets rid of the value listed as that of the random pokedex number in the array, 1 is the amount in the array we are removing
-
-              queryURL = "https://pokeapi.co/api/v2/pokemon/".concat(pokedexnumber); //calling the api using a random number
-
-              _context.next = 9;
-              return searchPokemon(queryURL);
-
-            case 9:
-              pokemondata = _context.sent;
-              //waits for the api to load
-              console.log(pokemondata.name); //log the pokemon's name (used for testing will be cut out)
-
-              _DomSelectors.DomSelectors.container.innerHTML = "<h1>Question ".concat(i, "</h1><br><h2>What is the name of the pok\xE9mon with pok\xE9dex number ").concat(pokedexnumber, "?</h2>\n      <img class=\"pokemon\" src=\"").concat(pokemondata.sprites.front_default, "\">\n      <br><input type=\"text\" placeholder=\"Pok\xE9mon Name\" class=\"number\" id=\"answer\">\n      <br><input type=\"submit\" class=\"enter_submit\" id=\"submit\" value=\"Submit\"><br>\n      <br><br><div id='counter'>You got ").concat(amountright, " out of ").concat(i - 1, " correct</div>"); //we ask the question, using the random pokemon number as the pokedex number, getting the image from the api's array, and recording the amount they got right.
-
-              document.getElementById("submit").addEventListener("click", showanswer); //calls the function when u hit the submit which is in the scope
-
-              document.getElementById("answer").select();
-              _context.next = 19;
-              break;
-
-            case 16:
-              //if the questionnumber is equal to the questions they inputted, we show the results screen showing what they got right and wrong, and let them try again.
-              _DomSelectors.DomSelectors.container.innerHTML = "You got ".concat(amountright, " out of ").concat(i, " correct</div>");
-
-              _DomSelectors.DomSelectors.container.insertAdjacentHTML("beforeend", "\n      <br><br>\n      <button id=\"try-again\" type=\"button\">Try Again?</button>");
-
-              document.getElementById("try-again").addEventListener("click", reloadQuiz); //if they hit try again, reloads the page(line 112)
-
-            case 19:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-    return _showquestion.apply(this, arguments);
-  }
-
-  function showanswer() {
-    var answer = document.getElementById("answer").value; //gets the string that the user inputted
-
-    var sign;
-    var identifier;
-
-    if (answer.toLowerCase() === pokemondata.name) {
-      //if the string all lowercased is equal to the name of the pokemon from the api, they get it right and one point is added
-      amountright = amountright + 1;
-      sign = "✓";
-      identifier = "checkmark";
-    } else {
-      //if the string isn't equal to it, it'ss wrong
-      sign = "✘";
-      identifier = "crossmark";
+    if (document.getElementById("check1").checked) {
+      //inserts values into our generationsSelected array from the generations.js file if their checkbox was selected
+      generationsSelected = generationsSelected.concat(_generations.generation1Array);
     }
 
-    _DomSelectors.DomSelectors.container.innerHTML = "<div><h1 class=\"identifier\" id=\"".concat(identifier, "\">").concat(sign, "</h1></div><div><h2>Your answer: ").concat(answer, "</h2></div><div><h2 class=\"pokemon-data-name\">Correct answer: ").concat(pokemondata.name, "</h2></div><br><input type=\"submit\" id=\"button\" value=\"Next Question\"><br><br><div id='counter'>You got ").concat(amountright, " out of ").concat(i, " correct</div>");
-    document.getElementById("button").addEventListener("click", showquestion); //shows them the answer, and if the click the button, it calls another function(line 120) which moves them to the next question
+    if (document.getElementById("check2").checked) {
+      generationsSelected = generationsSelected.concat(_generations.generation2Array);
+    }
+
+    if (document.getElementById("check3").checked) {
+      generationsSelected = generationsSelected.concat(_generations.generation3Array);
+    }
+
+    if (document.getElementById("check4").checked) {
+      generationsSelected = generationsSelected.concat(_generations.generation4Array);
+    }
+
+    if (document.getElementById("check5").checked) {
+      generationsSelected = generationsSelected.concat(_generations.generation5Array);
+    }
+
+    if (document.getElementById("check6").checked) {
+      generationsSelected = generationsSelected.concat(_generations.generation6Array);
+    }
+
+    if (document.getElementById("check7").checked) {
+      generationsSelected = generationsSelected.concat(_generations.generation7Array);
+    }
+
+    if (document.getElementById("check8").checked) {
+      generationsSelected = generationsSelected.concat(_generations.generation8Array);
+    }
+
+    if (generationsSelected == 0) {
+      //prevents the quiz from starting if they didnt check a box.
+      alert("You didn't pick one...");
+    } else {
+      _DomSelectors.DomSelectors.container.querySelector(".selection").innerHTML = ""; //completely wipes out the entire html in the div "container"
+
+      _DomSelectors.DomSelectors.container.querySelector(".selection").insertAdjacentHTML( //puts in new HTML
+      "afterend", "<label class = \"statement2\">Pick a number from 1-".concat(generationsSelected.length, " which will be the amount of Pok\xE9mon that will be given to you!\n      </label>\n      <br>\n      <br>\n      <input type=\"number\" min=\"1\" max='").concat(generationsSelected.length, "' placeholder=\"Enter #\" class=\"number\"> \n      <br>\n      <br>\n      <input type=\"submit\" class=\"enter_submit\" id=\"start\" value=\"Start The Game\">"));
+
+      document.querySelector(".number").select();
+      var submit = document.getElementById("start");
+      submit.addEventListener("click", function () {
+        //listens for the submit button to be clicked, and if it does, use the function which will be created on the spot
+        var questionsrequested = document.querySelector(".number").value;
+        var numquestions = parseInt(questionsrequested);
+
+        if (questionsrequested != numquestions) {
+          //checks if the input given is the same as the input without parts that are not present in an interger
+          alert("Please enter a whole number for the amount of questions that you want to play");
+        } else if (numquestions > generationsSelected.length) {
+          //If they put a number greater than what was intended, the quiz won't start and they'll be warned
+          alert("Its Greater than ".concat(generationsSelected.length, "!!!"));
+        } else if (numquestions < 1) {
+          //If they put a number less than intended, the quiz won't start and will also warn them
+          alert("If you don't wanna play any questions you don't have to play");
+        } else {
+          startgame(numquestions, generationsSelected); //starts quiz, saving the parameters to the function below(line 115)
+        }
+      });
+    }
+  });
+
+  function startgame(questionamount, pokedexnumbers) {
+    document.querySelector(".menu").innerHTML = "";
+    var i = 0;
+    var amountright = 0;
+    var pokemondata;
+    showquestion(); //call the async function
+
+    function showquestion() {
+      return _showquestion.apply(this, arguments);
+    }
+
+    function _showquestion() {
+      _showquestion = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var pokedexnumber, index, queryURL;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(i < questionamount)) {
+                  _context.next = 16;
+                  break;
+                }
+
+                //If the question is less than the total questions
+                _DomSelectors.DomSelectors.container.innerHTML = "Loding... Please Wait"; //to prevent double clicking the button we added a loading screen
+
+                i++; //increase the question counter by 1
+
+                pokedexnumber = pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)]; //randomized the pokemon sent out to the quiz(lines 106 and 115)
+
+                index = generationsSelected.indexOf(pokedexnumber); //indexof records the actual value of the randomized pokemon number of the array, not the element
+
+                generationsSelected.splice(index, 1); //we are calling the array and splice gets rid of the value listed as that of the random pokedex number in the array, 1 is the amount in the array we are removing
+
+                queryURL = "https://pokeapi.co/api/v2/pokemon/".concat(pokedexnumber); //calling the api using a random number
+
+                _context.next = 9;
+                return searchPokemon(queryURL);
+
+              case 9:
+                pokemondata = _context.sent;
+                //waits for the api to load
+                console.log(pokemondata.name); //log the pokemon's name (used for testing will be cut out)
+
+                _DomSelectors.DomSelectors.container.innerHTML = "<h1>Question ".concat(i, "</h1><br><h2>What is the name of the pok\xE9mon with pok\xE9dex number ").concat(pokedexnumber, "?</h2>\n        <img class=\"pokemon\" src=\"").concat(pokemondata.sprites.front_default, "\">\n        <br><input type=\"text\" placeholder=\"Pok\xE9mon Name\" class=\"number\" id=\"answer\">\n        <br><input type=\"submit\" class=\"enter_submit\" id=\"submit\" value=\"Submit\"><br>\n        <br><br><div id='counter'>You got ").concat(amountright, " out of ").concat(i - 1, " correct</div>"); //we ask the question, using the random pokemon number as the pokedex number, getting the image from the api's array, and recording the amount they got right.
+
+                document.getElementById("submit").addEventListener("click", showanswer); //calls the function when u hit the submit which is in the scope
+
+                document.getElementById("answer").select();
+                _context.next = 22;
+                break;
+
+              case 16:
+                //if the questionnumber is equal to the questions they inputted, we show the results screen showing what they got right and wrong, and let them try again.
+                mainMenu();
+                _DomSelectors.DomSelectors.container.innerHTML = "You got ".concat(amountright, " out of ").concat(i, " correct</div>");
+                _DomSelectors.DomSelectors.menu.innerHTML = "";
+
+                _DomSelectors.DomSelectors.menu.insertAdjacentHTML("beforeend", "\n        <button class=\"decision\" id=\"quiz-option\">Quiz</button>\n        <button class=\"decision\" id=\"pokedex-option\">Pok\xE9dex</button>");
+
+                document.getElementById("quiz-option").addEventListener('click', quiz);
+                document.getElementById("pokedex-option").addEventListener('click', showPokedex);
+
+              case 22:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+      return _showquestion.apply(this, arguments);
+    }
+
+    function showanswer() {
+      var answer = document.getElementById("answer").value; //gets the string that the user inputted
+
+      var sign;
+      var identifier;
+
+      if (answer.toLowerCase() === pokemondata.name) {
+        //if the string all lowercased is equal to the name of the pokemon from the api, they get it right and one point is added
+        amountright = amountright + 1;
+        sign = "✓";
+        identifier = "checkmark";
+      } else {
+        //if the string isn't equal to it, it'ss wrong
+        sign = "✘";
+        identifier = "crossmark";
+      }
+
+      _DomSelectors.DomSelectors.container.innerHTML = "<div><h1 class=\"identifier\" id=\"".concat(identifier, "\">").concat(sign, "</h1></div><div><h2>Your answer: ").concat(answer, "</h2></div><div><h2 class=\"pokemon-data-name\">Correct answer: ").concat(pokemondata.name, "</h2></div><br><input type=\"submit\" id=\"button\" value=\"Next Question\"><br><br><div id='counter'>You got ").concat(amountright, " out of ").concat(i, " correct</div>");
+      document.getElementById("button").addEventListener("click", showquestion); //shows them the answer, and if the click the button, it calls another function(line 120) which moves them to the next question
+    }
   }
 }
+
+function showPokedex() {
+  return _showPokedex.apply(this, arguments);
+}
+
+function _showPokedex() {
+  _showPokedex = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    var pokemonNumber, queryURL, pokedexdata;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            pokemonNumber = 1;
+            queryURL = "https://pokeapi.co/api/v2/pokemon/".concat(pokemonNumber);
+            _context3.next = 4;
+            return searchPokemon(queryURL);
+
+          case 4:
+            pokedexdata = _context3.sent;
+            _DomSelectors.DomSelectors.container.innerHTML = "";
+
+            _DomSelectors.DomSelectors.container.insertAdjacentHTML('beforeend', "<div id=\"pokedex\">Pok\xE9dex</div>\n  <form class=\"search-pokedex\">\n    <input type=\"text\">\n    <span class=\"search\">\uD83D\uDD0D</span>\n    <br>\n    <div class=\"pokedex-entry\">\n      <div class=\"pokedex-name\">Pok\xE9mon Name: Bulbasaur</div>\n      <div class=\"pokedex-number\">Poked\xE9x Number: ".concat(pokemonNumber, "</div>\n      <div class=\"pagination\">\n        <button class=\"page\" id=\"previous\">previous</button>\n        <button class=\"page\" id=\"next\">next</button>\n      </div>\n      <img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png\" class=\"pokedex-pokemon\">\n      <div class=\"stats\">\n        <div class=\"row1\">\n          <div id=\"hp\">HP: ").concat(pokedexdata.stats[0].base_stat, "</div>\n          <div id=\"specialatk\">SPATK: ").concat(pokedexdata.stats[3].base_stat, "</div>\n        </div>\n        <div class=\"row2\">\n          <div id=\"atk\">ATK: ").concat(pokedexdata.stats[1].base_stat, "</div>\n          <div id=\"specialdef\">SPDEF:").concat(pokedexdata.stats[4].base_stat, "</div>\n        </div>\n        <div class=\"row3\">\n          <div id=\"def\">DEF: ").concat(pokedexdata.stats[2].base_stat, "</div>\n          <div id=\"spd\">SPD: ").concat(pokedexdata.stats[5].base_stat, "</div>\n        </div>\n      </div>\n      <div class=\"weight\">Weight: ").concat(pokedexdata.weight, "</div>\n    </div>\n  </div>\n  </form>"));
+
+          case 7:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+  return _showPokedex.apply(this, arguments);
+}
+
+mainMenu();
 },{"./DomSelectors.js":"Scripts/DomSelectors.js","./generations.js":"Scripts/generations.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -1187,7 +1235,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56151" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59426" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

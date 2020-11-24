@@ -23,6 +23,15 @@ body {
   font-size: 2rem;
 }
 
+.menu {
+  padding-top: 1%;
+  text-align: center;
+}
+
+.selection {
+  font-size: 24px;
+}
+
 .copyright {
   position: absolute;
   width: 98.7%;
@@ -53,28 +62,38 @@ body {
   margin: auto;
 }
 
-.pokedex-name {
-  left: 2%;
-  position: absolute;
-  min-width: 900px;
+.pokedex-entry {
+  margin-top: 5%;
 }
 
-.pokedex-number {
-  left: 2%;
-  top: 150px;
-  position: absolute;
-  min-width: 900px;
+.pokemon-name {
+  padding-top: 100%;
+}
+
+.page {
+  text-align: center;
 }
 
 .pokedex-pokemon {
-  right: 40%;
-  position: relative;
-  min-width: 900px;
-  height: 80%;
+  height: 40%;
 }
 
-.pokemon-data-name {
-  text-transform: capitalize;
+.row1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.row2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.row3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 /*# sourceMappingURL=/style.42dbbe5b.css.map */
