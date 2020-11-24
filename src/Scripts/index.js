@@ -216,10 +216,10 @@ function searchValue() {
   const input = document.querySelector(".input").value;
   if (input != parseInt(input)) {
     alert("Please input an interger");
-  } else if (pokemonNumber > 893) {
-    alert(`You've exceeded the maximum number of Pokémon`);
-  } else if (pokemonNumber < 1) {
-    alert(`bruh`);
+  } else if (input > 893) {
+    alert("You've exceeded the maximum number of Pokémon");
+  } else if (input < 1) {
+    alert("Bruh");
   } else {
     pokemonNumber = parseInt(input);
     showPokedex();

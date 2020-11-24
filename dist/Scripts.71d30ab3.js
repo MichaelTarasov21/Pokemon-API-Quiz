@@ -1194,10 +1194,10 @@ function searchValue() {
 
   if (input != parseInt(input)) {
     alert("Please input an interger");
-  } else if (pokemonNumber > 893) {
-    alert("You've exceeded the maximum number of Pok\xE9mon");
-  } else if (pokemonNumber < 1) {
-    alert("bruh");
+  } else if (input > 893) {
+    alert("You've exceeded the maximum number of Pokémon");
+  } else if (input < 1) {
+    alert("Bruh");
   } else {
     pokemonNumber = parseInt(input);
     showPokedex();
@@ -1274,7 +1274,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53509" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55832" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
