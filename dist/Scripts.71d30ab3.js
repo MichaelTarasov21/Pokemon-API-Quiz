@@ -1178,15 +1178,30 @@ function quiz() {
 }
 
 function next() {
-  _DomSelectors.DomSelectors.container.innerHTML = "Loading please wait";
+  _DomSelectors.DomSelectors.container.innerHTML = "";
   pokemonNumber = pokemonNumber + 1;
   showPokedex();
 }
 
 function previous() {
-  _DomSelectors.DomSelectors.container.innerHTML = "Loading please wait";
+  _DomSelectors.DomSelectors.container.innerHTML = "";
   pokemonNumber = pokemonNumber - 1;
   showPokedex();
+}
+
+function searchValue() {
+  var input = document.querySelector(".input").value;
+
+  if (input != parseInt(input)) {
+    alert("Please input an interger");
+  } else if (pokemonNumber > 893) {
+    alert("You've exceeded the maximum number of Pok\xE9mon");
+  } else if (pokemonNumber < 1) {
+    alert("bruh");
+  } else {
+    pokemonNumber = parseInt(input);
+    showPokedex();
+  }
 }
 
 function showPokedex() {
@@ -1194,62 +1209,19 @@ function showPokedex() {
 }
 
 function _showPokedex() {
-  _showPokedex = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-    var queryURL, pokedexdata, searchValue, _searchValue;
-
-    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+  _showPokedex = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    var queryURL, pokedexdata;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
-            _searchValue = function _searchValue3() {
-              _searchValue = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-                var pokemonNumber, queryURL, pokedexdata;
-                return regeneratorRuntime.wrap(function _callee3$(_context3) {
-                  while (1) {
-                    switch (_context3.prev = _context3.next) {
-                      case 0:
-                        pokemonNumber = document.querySelector('.input').value;
-                        _DomSelectors.DomSelectors.search_pokedex.innerHTML = "";
-                        queryURL = "https://pokeapi.co/api/v2/pokemon/".concat(pokemonNumber);
-
-                        if (pokemonNumber > 893) {
-                          alert("You've exceeded the maximum number of Pok\xE9mon");
-                          showPokedex();
-                        } else if (pokemonNumber < 1) {
-                          alert("bruh");
-                          showPokedex();
-                        }
-
-                        _context3.next = 6;
-                        return searchPokemon(queryURL);
-
-                      case 6:
-                        pokedexdata = _context3.sent;
-                        _DomSelectors.DomSelectors.search_pokedex.innerHTML = "<div id=\"pokedex\">Pok\xE9dex</div>\n    <div class=\"search-pokedex\">\n      <input class=\"input\" type=\"text\">\n      <span class=\"search\">\uD83D\uDD0D</span>\n      <br>\n      <div class=\"pokedex-entry\">\n        <div class=\"pokedex-name\">Pok\xE9mon Name: ".concat(pokedexdata.name, "</div>\n        <div class=\"pokedex-number\">Poked\xE9x Number: ").concat(pokemonNumber, "</div>\n        <div id=\"pagebuttons\" class=\"pagination\">\n        </div>\n        <img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/").concat(pokemonNumber, ".png\" class=\"pokedex-pokemon\">\n        <div class=\"stats\">\n          <div class=\"row1\">\n            <div id=\"hp\">HP: ").concat(pokedexdata.stats[0].base_stat, "</div>\n            <div id=\"specialatk\">SPATK: ").concat(pokedexdata.stats[3].base_stat, "</div>\n          </div>\n          <div class=\"row2\">\n            <div id=\"atk\">ATK: ").concat(pokedexdata.stats[1].base_stat, "</div>\n            <div id=\"specialdef\">SPDEF:").concat(pokedexdata.stats[4].base_stat, "</div>\n          </div>\n          <div class=\"row3\">\n            <div id=\"def\">DEF: ").concat(pokedexdata.stats[2].base_stat, "</div>\n            <div id=\"spd\">SPD: ").concat(pokedexdata.stats[5].base_stat, "</div>\n          </div>\n        </div>\n        <div class=\"weight\">Weight: ").concat(pokedexdata.weight, "</div>\n      </div>\n    </div>\n    </div>");
-                        document.querySelector('.search').addEventListener('click', searchValue);
-
-                      case 9:
-                      case "end":
-                        return _context3.stop();
-                    }
-                  }
-                }, _callee3);
-              }));
-              return _searchValue.apply(this, arguments);
-            };
-
-            searchValue = function _searchValue2() {
-              return _searchValue.apply(this, arguments);
-            };
-
             queryURL = "https://pokeapi.co/api/v2/pokemon/".concat(pokemonNumber);
-            _context4.next = 5;
+            _context3.next = 3;
             return searchPokemon(queryURL);
 
-          case 5:
-            pokedexdata = _context4.sent;
+          case 3:
+            pokedexdata = _context3.sent;
             _DomSelectors.DomSelectors.search_pokedex.innerHTML = "<div id=\"pokedex\">Pok\xE9dex</div>\n    <input class=\"input\" type=\"text\">\n    <span class=\"search\">\uD83D\uDD0D</span>\n    <br>\n    <div class=\"pokedex-entry\">\n      <div class=\"pokedex-name\">Pok\xE9mon Name: ".concat(pokedexdata.name, "</div>\n      <div class=\"pokedex-number\">Poked\xE9x Number: ").concat(pokemonNumber, "</div>\n      <div id=\"pagebuttons\" class=\"pagination\">\n      </div>\n      <img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/").concat(pokemonNumber, ".png\" class=\"pokedex-pokemon\">\n      <div class=\"stats\">\n        <div class=\"row1\">\n          <div id=\"hp\">HP: ").concat(pokedexdata.stats[0].base_stat, "</div>\n          <div id=\"specialatk\">SPATK: ").concat(pokedexdata.stats[3].base_stat, "</div>\n        </div>\n        <div class=\"row2\">\n          <div id=\"atk\">ATK: ").concat(pokedexdata.stats[1].base_stat, "</div>\n          <div id=\"specialdef\">SPDEF:").concat(pokedexdata.stats[4].base_stat, "</div>\n        </div>\n        <div class=\"row3\">\n          <div id=\"def\">DEF: ").concat(pokedexdata.stats[2].base_stat, "</div>\n          <div id=\"spd\">SPD: ").concat(pokedexdata.stats[5].base_stat, "</div>\n        </div>\n      </div>\n      <div class=\"weight\">Weight: ").concat(pokedexdata.weight, "</div>\n    </div>");
-            document.querySelector('.search').addEventListener('click', searchValue);
 
             if (pokemonNumber !== 1) {
               document.getElementById("pagebuttons").insertAdjacentHTML("afterbegin", "<button class=\"page\" id=\"previous\">previous</button>");
@@ -1261,12 +1233,14 @@ function _showPokedex() {
               document.getElementById("next").addEventListener("click", next);
             }
 
-          case 10:
+            document.querySelector(".search").addEventListener("click", searchValue);
+
+          case 8:
           case "end":
-            return _context4.stop();
+            return _context3.stop();
         }
       }
-    }, _callee4);
+    }, _callee3);
   }));
   return _showPokedex.apply(this, arguments);
 }
@@ -1300,7 +1274,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53360" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53509" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
