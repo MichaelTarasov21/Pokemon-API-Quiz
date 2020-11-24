@@ -1177,11 +1177,13 @@ function quiz() {
 }
 
 function next() {
+  _DomSelectors.DomSelectors.container.innerHTML = "Loading please wait";
   pokemonNumber = pokemonNumber + 1;
   showPokedex();
 }
 
 function previous() {
+  _DomSelectors.DomSelectors.container.innerHTML = "Loading please wait";
   pokemonNumber = pokemonNumber - 1;
   showPokedex();
 }
