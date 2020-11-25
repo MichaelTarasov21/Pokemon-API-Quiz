@@ -1100,7 +1100,7 @@ function quiz() {
             switch (_context.prev = _context.next) {
               case 0:
                 if (!(i < questionamount)) {
-                  _context.next = 16;
+                  _context.next = 15;
                   break;
                 }
 
@@ -1123,17 +1123,15 @@ function quiz() {
               case 9:
                 pokemondata = _context.sent;
                 //waits for the api to load
-                console.log(pokemondata.name); //log the pokemon's name (used for testing will be cut out)
-
                 _DomSelectors.DomSelectors.container.innerHTML = "<h1>Question ".concat(i, "</h1><br><h2>What is the name of the pok\xE9mon with pok\xE9dex number ").concat(pokedexnumber, "?</h2>\n        <img class=\"pokemon\" src=\"").concat(pokemondata.sprites.front_default, "\">\n        <br><input type=\"text\" placeholder=\"Pok\xE9mon Name\" class=\"number\" id=\"answer\">\n        <br><input type=\"submit\" class=\"enter_submit\" id=\"submit\" value=\"Submit\"><br>\n        <br><br><div id='counter'>You got ").concat(amountright, " out of ").concat(i - 1, " correct</div>"); //we ask the question, using the random pokemon number as the pokedex number, getting the image from the api's array, and recording the amount they got right.
 
                 document.getElementById("submit").addEventListener("click", showanswer); //calls the function when u hit the submit which is in the scope
 
                 document.getElementById("answer").select();
-                _context.next = 22;
+                _context.next = 21;
                 break;
 
-              case 16:
+              case 15:
                 //if the questionnumber is equal to the questions they inputted, we show the results screen showing what they got right and wrong, and let them try again.
                 mainMenu();
                 _DomSelectors.DomSelectors.container.innerHTML = "You got ".concat(amountright, " out of ").concat(i, " correct</div>");
@@ -1144,7 +1142,7 @@ function quiz() {
                 document.getElementById("quiz-option").addEventListener("click", quiz);
                 document.getElementById("pokedex-option").addEventListener("click", showPokedex);
 
-              case 22:
+              case 21:
               case "end":
                 return _context.stop();
             }
@@ -1159,8 +1157,9 @@ function quiz() {
 
       var sign;
       var identifier;
+      var pokemonname = pokemondata.name.split("-")[0];
 
-      if (answer.toLowerCase() === pokemondata.name) {
+      if (answer.toLowerCase() === pokemonname) {
         //if the string all lowercased is equal to the name of the pokemon from the api, they get it right and one point is added
         amountright = amountright + 1;
         sign = "✓";
@@ -1171,7 +1170,7 @@ function quiz() {
         identifier = "crossmark";
       }
 
-      _DomSelectors.DomSelectors.container.innerHTML = "<div><h1 class=\"identifier\" id=\"".concat(identifier, "\">").concat(sign, "</h1></div><div><h2>Your answer: ").concat(answer, "</h2></div><div><h2 class=\"pokemon-data-name\">Correct answer: ").concat(pokemondata.name, "</h2></div><br><input type=\"submit\" id=\"button\" value=\"Next Question\"><br><br><div id='counter'>You got ").concat(amountright, " out of ").concat(i, " correct</div>");
+      _DomSelectors.DomSelectors.container.innerHTML = "<div><h1 class=\"identifier\" id=\"".concat(identifier, "\">").concat(sign, "</h1></div><div><h2>Your answer: ").concat(answer, "</h2></div><div><h2 class=\"pokemon-data-name\">Correct answer: ").concat(pokemonname, "</h2></div><br><input type=\"submit\" id=\"button\" value=\"Next Question\"><br><br><div id='counter'>You got ").concat(amountright, " out of ").concat(i, " correct</div>");
       document.getElementById("button").addEventListener("click", showquestion); //shows them the answer, and if the click the button, it calls another function(line 120) which moves them to the next question
     }
   }
@@ -1323,7 +1322,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52257" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49378" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -156,7 +156,6 @@ function quiz() {
         generationsSelected.splice(index, 1); //we are calling the array and splice gets rid of the value listed as that of the random pokedex number in the array, 1 is the amount in the array we are removing
         let queryURL = `https://pokeapi.co/api/v2/pokemon/${pokedexnumber}`; //calling the api using a random number
         pokemondata = await searchPokemon(queryURL); //waits for the api to load
-        console.log(pokemondata.name); //log the pokemon's name (used for testing will be cut out)
         DomSelectors.container.innerHTML = `<h1>Question ${i}</h1><br><h2>What is the name of the pokémon with pokédex number ${pokedexnumber}?</h2>
         <img class="pokemon" src="${pokemondata.sprites.front_default}">
         <br><input type="text" placeholder="Pokémon Name" class="number" id="answer">
@@ -187,7 +186,8 @@ function quiz() {
       const answer = document.getElementById("answer").value; //gets the string that the user inputted
       let sign;
       let identifier;
-      if (answer.toLowerCase() === pokemondata.name) {
+      const pokemonname = pokemondata.name.split(`-`)[0]
+      if (answer.toLowerCase() === pokemonname) {
         //if the string all lowercased is equal to the name of the pokemon from the api, they get it right and one point is added
         amountright = amountright + 1;
         sign = "✓";
@@ -197,7 +197,7 @@ function quiz() {
         sign = "✘";
         identifier = "crossmark";
       }
-      DomSelectors.container.innerHTML = `<div><h1 class="identifier" id="${identifier}">${sign}</h1></div><div><h2>Your answer: ${answer}</h2></div><div><h2 class="pokemon-data-name">Correct answer: ${pokemondata.name}</h2></div><br><input type="submit" id="button" value="Next Question"><br><br><div id='counter'>You got ${amountright} out of ${i} correct</div>`;
+      DomSelectors.container.innerHTML = `<div><h1 class="identifier" id="${identifier}">${sign}</h1></div><div><h2>Your answer: ${answer}</h2></div><div><h2 class="pokemon-data-name">Correct answer: ${pokemonname}</h2></div><br><input type="submit" id="button" value="Next Question"><br><br><div id='counter'>You got ${amountright} out of ${i} correct</div>`;
       document.getElementById("button").addEventListener("click", showquestion); //shows them the answer, and if the click the button, it calls another function(line 120) which moves them to the next question
     }
   }
