@@ -105,4 +105,13 @@ body {
   justify-content: space-evenly;
 }
 
+#loading {
+  color: white;
+  font-size: 700%;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
 /*# sourceMappingURL=/style.42dbbe5b.css.map */

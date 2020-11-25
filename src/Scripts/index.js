@@ -148,7 +148,7 @@ function quiz() {
     async function showquestion() {
       if (i < questionamount) {
         //If the question is less than the total questions
-        DomSelectors.container.innerHTML = "Loding... Please Wait"; //to prevent double clicking the button we added a loading screen
+        DomSelectors.container.innerHTML = "<div id='loading'>Loading Please Wait</div>"; //to prevent double clicking the button we added a loading screen
         i++; //increase the question counter by 1
         const pokedexnumber =
           pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)]; //randomized the pokemon sent out to the quiz(lines 106 and 115)
@@ -203,12 +203,10 @@ function quiz() {
   }
 }
 function next() {
-  DomSelectors.container.innerHTML = "";
   pokemonNumber = pokemonNumber + 1;
   showPokedex();
 }
 function previous() {
-  DomSelectors.container.innerHTML = "";
   pokemonNumber = pokemonNumber - 1;
   showPokedex();
 }
@@ -226,6 +224,8 @@ function searchValue() {
   }
 }
 async function showPokedex() {
+  DomSelectors.container.innerHTML =
+    "<div id='loading'>Loading Please Wait</div>";
   let queryURL = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`;
   let pokedexdata = await searchPokemon(queryURL);
   DomSelectors.container.innerHTML = `<div id="pokedex">Pokédex</div>
