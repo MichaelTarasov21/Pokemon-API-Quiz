@@ -1165,7 +1165,7 @@ function quiz() {
         sign = "✓";
         identifier = "checkmark";
       } else {
-        //if the string isn't equal to it, it'ss wrong
+        //if the string isn't equal to it, it's wrong
         sign = "✘";
         identifier = "crossmark";
       }
@@ -1177,29 +1177,38 @@ function quiz() {
 }
 
 function next() {
+  //function that increases pokemonNumber by 1 to show next pokemon by order
   pokemonNumber = pokemonNumber + 1;
   showPokedex();
 }
 
 function previous() {
+  //function that decreases pokemonNumber by 1 to show previous pokemon by order
   pokemonNumber = pokemonNumber - 1;
   showPokedex();
 }
 
 function searchValue() {
-  var input = document.querySelector(".input").value.toLowerCase();
+  var input = document.querySelector(".input").value.toLowerCase(); //gets user input and lowercases it
 
   if (input > 893) {
+    // if user input greater than 893, warn them
     alert("You've exceeded the maximum number of Pokémon");
   } else if (input < 1) {
+    // if user input less than 1, warn them
     alert("Bruh");
   } else if (typeof input === 'string' && numberArray.includes(input) === true) {
-    pokemonNumber = parseInt(numberArray.indexOf(input) + 1);
+    // if user input is a string and the string is part of the array
+    pokemonNumber = numberArray.indexOf(input) + 1; //pokemonNumber becomes the number of whatever the user input is equal to in terms of the array +1
+
     showPokedex();
   } else if (input >= 1 && input <= 893) {
-    pokemonNumber = parseInt(input);
+    // if user input is equal to or greater than 1 and less than or equal to 893
+    pokemonNumber = parseInt(input); //pokemonNumber becomes the input
+
     showPokedex();
   } else {
+    // if none of the conditions are met, warn them
     alert("You either mispelled or that Pokémon doesn't exist!");
   }
 }
@@ -1216,7 +1225,8 @@ function _showPokedex() {
         switch (_context3.prev = _context3.next) {
           case 0:
             _DomSelectors.DomSelectors.container.innerHTML = "<div id='loading'>Loading Please Wait</div>";
-            queryURL = "https://pokeapi.co/api/v2/pokemon/".concat(pokemonNumber);
+            queryURL = "https://pokeapi.co/api/v2/pokemon/".concat(pokemonNumber); //gets api
+
             _context3.next = 4;
             return searchPokemon(queryURL);
 
@@ -1225,11 +1235,13 @@ function _showPokedex() {
             _DomSelectors.DomSelectors.container.innerHTML = "<div id=\"pokedex\">Pok\xE9dex</div>\n    <input class=\"input\" type=\"text\">\n    <span class=\"search\">\uD83D\uDD0D</span>\n    <br>\n    <div class=\"pokedex-entry\">\n      <div class=\"pokedex-name\">Pok\xE9mon Name: ".concat(pokedexdata.name, "</div>\n      <div class=\"pokedex-number\">Poked\xE9x Number: ").concat(pokemonNumber, "</div>\n      <div id=\"pagebuttons\" class=\"pagination\">\n      </div>\n      <img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/").concat(pokemonNumber, ".png\" class=\"pokedex-pokemon\">\n      <div class=\"stats\">\n        <div class=\"row1\">\n          <div id=\"hp\">HP: ").concat(pokedexdata.stats[0].base_stat, "</div>\n          <div id=\"specialatk\">SPATK: ").concat(pokedexdata.stats[3].base_stat, "</div>\n        </div>\n        <div class=\"row2\">\n          <div id=\"atk\">ATK: ").concat(pokedexdata.stats[1].base_stat, "</div>\n          <div id=\"specialdef\">SPDEF:").concat(pokedexdata.stats[4].base_stat, "</div>\n        </div>\n        <div class=\"row3\">\n          <div id=\"def\">DEF: ").concat(pokedexdata.stats[2].base_stat, "</div>\n          <div id=\"spd\">SPD: ").concat(pokedexdata.stats[5].base_stat, "</div>\n        </div>\n      </div>\n      <div class=\"weight\">Weight: ").concat(pokedexdata.weight, "</div>\n    </div>");
 
             if (pokemonNumber !== 1) {
+              //if pokemonNumber does NOT equal to 1, create a previous button
               document.getElementById("pagebuttons").insertAdjacentHTML("afterbegin", "<button class=\"page\" id=\"previous\">previous</button>");
               document.getElementById("previous").addEventListener("click", previous);
             }
 
             if (pokemonNumber !== 893) {
+              //if pokemonNumber does NOT equal to 893, create a next button
               document.getElementById("pagebuttons").insertAdjacentHTML("beforeend", "<button class=\"page\" id=\"next\">next</button>");
               document.getElementById("next").addEventListener("click", next);
             }
@@ -1291,9 +1303,7 @@ function _getNumber() {
   return _getNumber.apply(this, arguments);
 }
 
-getNumber(); //reverse engineering
-//receive string input from person
-//get the string, change it to value
+getNumber(); //calls async function(is needed so we can use await)
 },{"./DomSelectors.js":"Scripts/DomSelectors.js","./generations.js":"Scripts/generations.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -1322,7 +1332,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49378" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52541" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

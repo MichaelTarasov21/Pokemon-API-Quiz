@@ -193,7 +193,7 @@ function quiz() {
         sign = "✓";
         identifier = "checkmark";
       } else {
-        //if the string isn't equal to it, it'ss wrong
+        //if the string isn't equal to it, it's wrong
         sign = "✘";
         identifier = "crossmark";
       }
@@ -202,34 +202,34 @@ function quiz() {
     }
   }
 }
-function next() {
+function next() {//function that increases pokemonNumber by 1 to show next pokemon by order
   pokemonNumber = pokemonNumber + 1;
   showPokedex();
 }
-function previous() {
+function previous() {//function that decreases pokemonNumber by 1 to show previous pokemon by order
   pokemonNumber = pokemonNumber - 1;
   showPokedex();
 }
 function searchValue() {
-  const input = document.querySelector(".input").value.toLowerCase();
-    if (input > 893) {
+  const input = document.querySelector(".input").value.toLowerCase();//gets user input and lowercases it
+    if (input > 893) {// if user input greater than 893, warn them
     alert("You've exceeded the maximum number of Pokémon");
-  } else if (input < 1) {
+  } else if (input < 1) {// if user input less than 1, warn them
     alert("Bruh");
-  } else if (typeof input === 'string' && numberArray.includes(input) === true) {
-    pokemonNumber = parseInt(numberArray.indexOf(input)+1)
+  } else if (typeof input === 'string' && numberArray.includes(input) === true) {// if user input is a string and the string is part of the array
+    pokemonNumber = numberArray.indexOf(input)+1//pokemonNumber becomes the number of whatever the user input is equal to in terms of the array +1
     showPokedex();
-  } else if (input >= 1 && input <= 893 ){
-    pokemonNumber = parseInt(input);
+  } else if (input >= 1 && input <= 893 ){// if user input is equal to or greater than 1 and less than or equal to 893
+    pokemonNumber = parseInt(input);//pokemonNumber becomes the input
     showPokedex();
-  } else{
+  } else{// if none of the conditions are met, warn them
     alert("You either mispelled or that Pokémon doesn't exist!")
   }
 }
 async function showPokedex() {
   DomSelectors.container.innerHTML =
     "<div id='loading'>Loading Please Wait</div>";
-  let queryURL = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`;
+  let queryURL = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`;//gets api
   let pokedexdata = await searchPokemon(queryURL);
   DomSelectors.container.innerHTML = `<div id="pokedex">Pokédex</div>
     <input class="input" type="text">
@@ -257,7 +257,7 @@ async function showPokedex() {
       </div>
       <div class="weight">Weight: ${pokedexdata.weight}</div>
     </div>`;
-  if (pokemonNumber !== 1) {
+  if (pokemonNumber !== 1) {//if pokemonNumber does NOT equal to 1, create a previous button
     document
       .getElementById("pagebuttons")
       .insertAdjacentHTML(
@@ -266,7 +266,7 @@ async function showPokedex() {
       );
     document.getElementById("previous").addEventListener("click", previous);
   }
-  if (pokemonNumber !== 893) {
+  if (pokemonNumber !== 893) {//if pokemonNumber does NOT equal to 893, create a next button
     document.getElementById("pagebuttons").insertAdjacentHTML(
         "beforeend",
         `<button class="page" id="next">next</button>`
@@ -278,7 +278,6 @@ async function showPokedex() {
 mainMenu();
 
 let numberArray = []
-
 async function getNumber(){
   let i
   for (i=1; i<= 893; i++){
@@ -287,10 +286,4 @@ async function getNumber(){
     numberArray.push(pokemonID.name)
   }
 }
-
-getNumber();
-
-//reverse engineering
-//receive string input from person
-//get the string, change it to value
-
+getNumber();//calls async function(is needed so we can use await)
