@@ -1188,17 +1188,20 @@ function previous() {
 }
 
 function searchValue() {
-  var input = document.querySelector(".input").value;
+  var input = document.querySelector(".input").value.toLowerCase();
 
-  if (input != parseInt(input)) {
-    alert("Please input an interger");
-  } else if (input > 893) {
+  if (input > 893) {
     alert("You've exceeded the maximum number of Pokémon");
   } else if (input < 1) {
     alert("Bruh");
-  } else {
+  } else if (typeof input === 'string' && numberArray.includes(input) === true) {
+    pokemonNumber = parseInt(numberArray.indexOf(input) + 1);
+    showPokedex();
+  } else if (input >= 1 && input <= 893) {
     pokemonNumber = parseInt(input);
     showPokedex();
+  } else {
+    alert("You either mispelled or that Pokémon doesn't exist!");
   }
 }
 
@@ -1245,6 +1248,53 @@ function _showPokedex() {
 }
 
 mainMenu();
+var numberArray = [];
+
+function getNumber() {
+  return _getNumber.apply(this, arguments);
+}
+
+function _getNumber() {
+  _getNumber = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+    var i, queryURL, pokemonID;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            i = 1;
+
+          case 1:
+            if (!(i <= 893)) {
+              _context4.next = 10;
+              break;
+            }
+
+            queryURL = "https://pokeapi.co/api/v2/pokemon/".concat(i);
+            _context4.next = 5;
+            return searchPokemon(queryURL);
+
+          case 5:
+            pokemonID = _context4.sent;
+            numberArray.push(pokemonID.name);
+
+          case 7:
+            i++;
+            _context4.next = 1;
+            break;
+
+          case 10:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+  return _getNumber.apply(this, arguments);
+}
+
+getNumber(); //reverse engineering
+//receive string input from person
+//get the string, change it to value
 },{"./DomSelectors.js":"Scripts/DomSelectors.js","./generations.js":"Scripts/generations.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -1273,7 +1323,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63423" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52257" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

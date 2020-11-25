@@ -211,16 +211,19 @@ function previous() {
   showPokedex();
 }
 function searchValue() {
-  const input = document.querySelector(".input").value;
-  if (input != parseInt(input)) {
-    alert("Please input an interger");
-  } else if (input > 893) {
+  const input = document.querySelector(".input").value.toLowerCase();
+    if (input > 893) {
     alert("You've exceeded the maximum number of Pokémon");
   } else if (input < 1) {
     alert("Bruh");
-  } else {
+  } else if (typeof input === 'string' && numberArray.includes(input) === true) {
+    pokemonNumber = parseInt(numberArray.indexOf(input)+1)
+    showPokedex();
+  } else if (input >= 1 && input <= 893 ){
     pokemonNumber = parseInt(input);
     showPokedex();
+  } else{
+    alert("You either mispelled or that Pokémon doesn't exist!")
   }
 }
 async function showPokedex() {
@@ -264,9 +267,7 @@ async function showPokedex() {
     document.getElementById("previous").addEventListener("click", previous);
   }
   if (pokemonNumber !== 893) {
-    document
-      .getElementById("pagebuttons")
-      .insertAdjacentHTML(
+    document.getElementById("pagebuttons").insertAdjacentHTML(
         "beforeend",
         `<button class="page" id="next">next</button>`
       );
@@ -275,3 +276,21 @@ async function showPokedex() {
   document.querySelector(".search").addEventListener("click", searchValue);
 }
 mainMenu();
+
+let numberArray = []
+
+async function getNumber(){
+  let i
+  for (i=1; i<= 893; i++){
+    let queryURL = `https://pokeapi.co/api/v2/pokemon/${i}`;
+    let pokemonID = await searchPokemon(queryURL);
+    numberArray.push(pokemonID.name)
+  }
+}
+
+getNumber();
+
+//reverse engineering
+//receive string input from person
+//get the string, change it to value
+
