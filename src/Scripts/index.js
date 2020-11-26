@@ -11,6 +11,35 @@ import {
   generation8Array,
 } from "./generations.js";
 import "regenerator-runtime/runtime";
+let caught;
+let seen;
+if (document.cookie != "") {
+  let seencaught = document.cookie;
+  seencaught = seencaught.split("divider");
+  seen = seencaught[0];
+  seen = seen.replace("[", "");
+  seen = seen.replace("]", "");
+  seen = seen.split(",");
+  const seencutoff = seen.length
+  for (let i = 0; i < seencutoff; i++) {
+    seen[i] = parseInt(seen[i]);
+  }
+  caught = seencaught[1];
+  try {
+    caught.replace("[", "");
+    caught.replace("]", "");
+  } catch {}
+  caught = caught.split(",");
+  const caughtoff = caught.length
+  for (let i = 0; i < caughtoff; i++) {
+    caught[i] = parseInt(caught[i]);
+  }
+} else {
+  caught = [];
+  seen = [];
+}
+console.log(seen);
+console.log(caught);
 async function searchPokemon(queryurl) {
   //grabing the api, and then turning the api in a json, then we return it
   const response = await fetch(queryurl, ["GET"]); //await means that it waits for the api to load before loading
@@ -33,6 +62,7 @@ function mainMenu() {
     .addEventListener("click", showPokedex);
 }
 function quiz() {
+  let cookiestring = document.cookie;
   DomSelectors.container.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       const button = document.getElementsByClassName("enter_submit");
@@ -148,7 +178,8 @@ function quiz() {
     async function showquestion() {
       if (i < questionamount) {
         //If the question is less than the total questions
-        DomSelectors.container.innerHTML = "<div id='loading'>Loading Please Wait</div>"; //to prevent double clicking the button we added a loading screen
+        DomSelectors.container.innerHTML =
+          "<div id='loading'>Loading Please Wait</div>"; //to prevent double clicking the button we added a loading screen
         i++; //increase the question counter by 1
         const pokedexnumber =
           pokedexnumbers[Math.floor(Math.random() * pokedexnumbers.length)]; //randomized the pokemon sent out to the quiz(lines 106 and 115)
@@ -186,50 +217,76 @@ function quiz() {
       const answer = document.getElementById("answer").value; //gets the string that the user inputted
       let sign;
       let identifier;
-      const pokemonname = pokemondata.name.split(`-`)[0]
+      const pokemonname = pokemondata.name.split(`-`)[0];
       if (answer.toLowerCase() === pokemonname) {
         //if the string all lowercased is equal to the name of the pokemon from the api, they get it right and one point is added
         amountright = amountright + 1;
         sign = "✓";
         identifier = "checkmark";
+        if (!caught.includes(pokemondata.id)) {
+          caught.push(pokemondata.id);
+          cookiestring = `${JSON.stringify(seen)}divider${JSON.stringify(
+            caught
+          )} `;
+          document.cookie = `${cookiestring};SameSite=Strict`;
+          console.log(document.cookie);
+        }
       } else {
         //if the string isn't equal to it, it's wrong
         sign = "✘";
         identifier = "crossmark";
+        if (!seen.includes(pokemondata.id)) {
+          seen.push(pokemondata.id);
+          cookiestring = `${JSON.stringify(seen)}divider${JSON.stringify(
+            caught
+          )} `;
+          document.cookie = `${cookiestring};SameSite=Strict`;
+          console.log(document.cookie);
+        }
       }
       DomSelectors.container.innerHTML = `<div><h1 class="identifier" id="${identifier}">${sign}</h1></div><div><h2>Your answer: ${answer}</h2></div><div><h2 class="pokemon-data-name">Correct answer: ${pokemonname}</h2></div><br><input type="submit" id="button" value="Next Question"><br><br><div id='counter'>You got ${amountright} out of ${i} correct</div>`;
       document.getElementById("button").addEventListener("click", showquestion); //shows them the answer, and if the click the button, it calls another function(line 120) which moves them to the next question
     }
   }
 }
-function next() {//function that increases pokemonNumber by 1 to show next pokemon by order
+function next() {
+  //function that increases pokemonNumber by 1 to show next pokemon by order
   pokemonNumber = pokemonNumber + 1;
   showPokedex();
 }
-function previous() {//function that decreases pokemonNumber by 1 to show previous pokemon by order
+function previous() {
+  //function that decreases pokemonNumber by 1 to show previous pokemon by order
   pokemonNumber = pokemonNumber - 1;
   showPokedex();
 }
 function searchValue() {
-  const input = document.querySelector(".input").value.toLowerCase();//gets user input and lowercases it
-    if (input > 893) {// if user input greater than 893, warn them
+  const input = document.querySelector(".input").value.toLowerCase(); //gets user input and lowercases it
+  if (input > 893) {
+    // if user input greater than 893, warn them
     alert("You've exceeded the maximum number of Pokémon");
-  } else if (input < 1) {// if user input less than 1, warn them
+  } else if (input < 1) {
+    // if user input less than 1, warn them
     alert("Bruh");
-  } else if (typeof input === 'string' && numberArray.includes(input) === true) {// if user input is a string and the string is part of the array
-    pokemonNumber = numberArray.indexOf(input)+1//pokemonNumber becomes the number of whatever the user input is equal to in terms of the array +1
+  } else if (
+    typeof input === "string" &&
+    numberArray.includes(input) === true
+  ) {
+    // if user input is a string and the string is part of the array
+    pokemonNumber = numberArray.indexOf(input) + 1; //pokemonNumber becomes the number of whatever the user input is equal to in terms of the array +1
     showPokedex();
-  } else if (input >= 1 && input <= 893 ){// if user input is equal to or greater than 1 and less than or equal to 893
-    pokemonNumber = parseInt(input);//pokemonNumber becomes the input
+  } else if (input >= 1 && input <= 893) {
+    // if user input is equal to or greater than 1 and less than or equal to 893
+    pokemonNumber = parseInt(input); //pokemonNumber becomes the input
     showPokedex();
-  } else{// if none of the conditions are met, warn them
-    alert("You either mispelled or that Pokémon doesn't exist!")
+  } else {
+    // if none of the conditions are met, warn them
+    alert("You either mispelled or that Pokémon doesn't exist!");
   }
 }
 async function showPokedex() {
   DomSelectors.container.innerHTML =
     "<div id='loading'>Loading Please Wait</div>";
-  let queryURL = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`;//gets api
+  let queryURL = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`; //gets api
   let pokedexdata = await searchPokemon(queryURL);
   DomSelectors.container.innerHTML = `<div id="pokedex">Pokédex</div>
     <input class="input" type="text">
@@ -257,7 +314,8 @@ async function showPokedex() {
       </div>
       <div class="weight">Weight: ${pokedexdata.weight}</div>
     </div>`;
-  if (pokemonNumber !== 1) {//if pokemonNumber does NOT equal to 1, create a previous button
+  if (pokemonNumber !== 1) {
+    //if pokemonNumber does NOT equal to 1, create a previous button
     document
       .getElementById("pagebuttons")
       .insertAdjacentHTML(
@@ -266,8 +324,11 @@ async function showPokedex() {
       );
     document.getElementById("previous").addEventListener("click", previous);
   }
-  if (pokemonNumber !== 893) {//if pokemonNumber does NOT equal to 893, create a next button
-    document.getElementById("pagebuttons").insertAdjacentHTML(
+  if (pokemonNumber !== 893) {
+    //if pokemonNumber does NOT equal to 893, create a next button
+    document
+      .getElementById("pagebuttons")
+      .insertAdjacentHTML(
         "beforeend",
         `<button class="page" id="next">next</button>`
       );
@@ -277,13 +338,13 @@ async function showPokedex() {
 }
 mainMenu();
 
-let numberArray = []
-async function getNumber(){
-  let i
-  for (i=1; i<= 893; i++){
+let numberArray = [];
+async function getNumber() {
+  let i;
+  for (i = 1; i <= 893; i++) {
     let queryURL = `https://pokeapi.co/api/v2/pokemon/${i}`;
     let pokemonID = await searchPokemon(queryURL);
-    numberArray.push(pokemonID.name)
+    numberArray.push(pokemonID.name);
   }
 }
-getNumber();//calls async function(is needed so we can use await)
+getNumber(); //calls async function(is needed so we can use await)

@@ -950,6 +950,43 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var caught;
+var seen;
+
+if (document.cookie != "") {
+  var seencaught = document.cookie;
+  seencaught = seencaught.split("divider");
+  seen = seencaught[0];
+  seen = seen.replace("[", "");
+  seen = seen.replace("]", "");
+  seen = seen.split(",");
+  var seencutoff = seen.length;
+
+  for (var i = 0; i < seencutoff; i++) {
+    seen[i] = parseInt(seen[i]);
+  }
+
+  caught = seencaught[1];
+
+  try {
+    caught.replace("[", "");
+    caught.replace("]", "");
+  } catch (_unused) {}
+
+  caught = caught.split(",");
+  var caughtoff = caught.length;
+
+  for (var _i = 0; _i < caughtoff; _i++) {
+    caught[_i] = parseInt(caught[_i]);
+  }
+} else {
+  caught = [];
+  seen = [];
+}
+
+console.log(seen);
+console.log(caught);
+
 function searchPokemon(_x) {
   return _searchPokemon.apply(this, arguments);
 }
@@ -996,6 +1033,8 @@ function mainMenu() {
 }
 
 function quiz() {
+  var cookiestring = document.cookie;
+
   _DomSelectors.DomSelectors.container.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       var button = document.getElementsByClassName("enter_submit");
@@ -1164,10 +1203,24 @@ function quiz() {
         amountright = amountright + 1;
         sign = "✓";
         identifier = "checkmark";
+
+        if (!caught.includes(pokemondata.id)) {
+          caught.push(pokemondata.id);
+          cookiestring = "".concat(JSON.stringify(seen), "divider").concat(JSON.stringify(caught), " ");
+          document.cookie = "".concat(cookiestring, ";SameSite=Strict");
+          console.log(document.cookie);
+        }
       } else {
         //if the string isn't equal to it, it's wrong
         sign = "✘";
         identifier = "crossmark";
+
+        if (!seen.includes(pokemondata.id)) {
+          seen.push(pokemondata.id);
+          cookiestring = "".concat(JSON.stringify(seen), "divider").concat(JSON.stringify(caught), " ");
+          document.cookie = "".concat(cookiestring, ";SameSite=Strict");
+          console.log(document.cookie);
+        }
       }
 
       _DomSelectors.DomSelectors.container.innerHTML = "<div><h1 class=\"identifier\" id=\"".concat(identifier, "\">").concat(sign, "</h1></div><div><h2>Your answer: ").concat(answer, "</h2></div><div><h2 class=\"pokemon-data-name\">Correct answer: ").concat(pokemonname, "</h2></div><br><input type=\"submit\" id=\"button\" value=\"Next Question\"><br><br><div id='counter'>You got ").concat(amountright, " out of ").concat(i, " correct</div>");
@@ -1197,7 +1250,7 @@ function searchValue() {
   } else if (input < 1) {
     // if user input less than 1, warn them
     alert("Bruh");
-  } else if (typeof input === 'string' && numberArray.includes(input) === true) {
+  } else if (typeof input === "string" && numberArray.includes(input) === true) {
     // if user input is a string and the string is part of the array
     pokemonNumber = numberArray.indexOf(input) + 1; //pokemonNumber becomes the number of whatever the user input is equal to in terms of the array +1
 
@@ -1304,7 +1357,7 @@ function _getNumber() {
 }
 
 getNumber(); //calls async function(is needed so we can use await)
-},{"./DomSelectors.js":"Scripts/DomSelectors.js","./generations.js":"Scripts/generations.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./DomSelectors.js":"Scripts/DomSelectors.js","./generations.js":"Scripts/generations.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1332,7 +1385,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52541" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51122" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -1508,5 +1561,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","Scripts/index.js"], null)
+},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","Scripts/index.js"], null)
 //# sourceMappingURL=/Scripts.71d30ab3.js.map
