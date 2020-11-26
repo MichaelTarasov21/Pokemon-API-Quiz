@@ -369,19 +369,19 @@ async function showPokedex() {
       <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png" class="pokedex-pokemon">
       <div class="stats">
         <div class="row1">
-          <div id="hp">HP: ${pokedexdata.stats[0].base_stat}</div>
-          <div id="specialatk">SPATK: ${pokedexdata.stats[3].base_stat}</div>
+          <div id="hp">HP:?</div>
+          <div id="specialatk">SPATK:?</div>
         </div>
         <div class="row2">
-          <div id="atk">ATK: ${pokedexdata.stats[1].base_stat}</div>
-          <div id="specialdef">SPDEF:${pokedexdata.stats[4].base_stat}</div>
+          <div id="atk">ATK:?</div>
+          <div id="specialdef">SPDEF:?</div>
         </div>
         <div class="row3">
-          <div id="def">DEF: ${pokedexdata.stats[2].base_stat}</div>
-          <div id="spd">SPD: ${pokedexdata.stats[5].base_stat}</div>
+          <div id="def">DEF:?</div>
+          <div id="spd">SPD:?</div>
         </div>
       </div>
-      <div class="weight">Weight: ${pokedexdata.weight}</div>
+      <div class="weight">Weight:?</div>
     </div>`;
     } else {
       DomSelectors.container.innerHTML = `<div id="pokedex">Pokédex</div>
@@ -389,26 +389,26 @@ async function showPokedex() {
     <span class="search">🔍</span>
     <br>
     <div class="pokedex-entry">
-      <div class="pokedex-name">Pokémon Name: ${pokedexdata.name}</div>
+      <div class="pokedex-name">Pokémon Name:?</div>
       <div class="pokedex-number">Pokedéx Number: ${pokemonNumber}</div>
       <div id="pagebuttons" class="pagination">
       </div>
-      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png" class="pokedex-pokemon">
+      <img src="https://i.postimg.cc/6QXXtR0b/image.png" class="pokedex-pokemon">
       <div class="stats">
         <div class="row1">
-          <div id="hp">HP: ${pokedexdata.stats[0].base_stat}</div>
-          <div id="specialatk">SPATK: ${pokedexdata.stats[3].base_stat}</div>
+          <div id="hp">HP:?</div>
+          <div id="specialatk">SPATK:?</div>
         </div>
         <div class="row2">
-          <div id="atk">ATK: ${pokedexdata.stats[1].base_stat}</div>
-          <div id="specialdef">SPDEF:${pokedexdata.stats[4].base_stat}</div>
+          <div id="atk">ATK:?</div>
+          <div id="specialdef">SPDEF:?</div>
         </div>
         <div class="row3">
-          <div id="def">DEF: ${pokedexdata.stats[2].base_stat}</div>
-          <div id="spd">SPD: ${pokedexdata.stats[5].base_stat}</div>
+          <div id="def">DEF:?</div>
+          <div id="spd">SPD:?</div>
         </div>
       </div>
-      <div class="weight">Weight: ${pokedexdata.weight}</div>
+      <div class="weight">Weight:?</div>
     </div>`;
     }
   }
