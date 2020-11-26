@@ -960,9 +960,8 @@ if (document.cookie != "") {
   seen = seen.replace("[", "");
   seen = seen.replace("]", "");
   seen = seen.split(",");
-  var seencutoff = seen.length;
 
-  for (var i = 0; i < seencutoff; i++) {
+  for (var i = 0; i < seen.length; i++) {
     seen[i] = parseInt(seen[i]);
   }
 
@@ -974,9 +973,8 @@ if (document.cookie != "") {
   } catch (_unused) {}
 
   caught = caught.split(",");
-  var caughtoff = caught.length;
 
-  for (var _i = 0; _i < caughtoff; _i++) {
+  for (var _i = 0; _i < caught.length; _i++) {
     caught[_i] = parseInt(caught[_i]);
   }
 } else {

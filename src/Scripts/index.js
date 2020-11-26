@@ -20,8 +20,7 @@ if (document.cookie != "") {
   seen = seen.replace("[", "");
   seen = seen.replace("]", "");
   seen = seen.split(",");
-  const seencutoff = seen.length
-  for (let i = 0; i < seencutoff; i++) {
+  for (let i = 0; i < seen.length; i++) {
     seen[i] = parseInt(seen[i]);
   }
   caught = seencaught[1];
@@ -30,8 +29,7 @@ if (document.cookie != "") {
     caught.replace("]", "");
   } catch {}
   caught = caught.split(",");
-  const caughtoff = caught.length
-  for (let i = 0; i < caughtoff; i++) {
+  for (let i = 0; i < caught.length; i++) {
     caught[i] = parseInt(caught[i]);
   }
 } else {
