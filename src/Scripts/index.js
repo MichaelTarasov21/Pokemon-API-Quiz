@@ -18,20 +18,26 @@ if (document.cookie != "") {
   let seencaught = document.cookie;
   seencaught = seencaught.split("divider");
   seen = seencaught[0];
-  seen = seen.replace("[", "");
-  seen = seen.replace("]", "");
-  seen = seen.split(",");
-  for (let i = 0; i < seen.length; i++) {
-    seen[i] = parseInt(seen[i]);
+  if (seen != "[]") {
+    seen = seen.replace("[", "");
+    seen = seen.replace("]", "");
+    seen = seen.split(",");
+    for (let i = 0; i < seen.length; i++) {
+      seen[i] = parseInt(seen[i]);
+    }
+  } else {
+    seen = [];
   }
   caught = seencaught[1];
-  try {
+  if (caught != '[]') {
     caught.replace("[", "");
     caught.replace("]", "");
-  } catch {}
-  caught = caught.split(",");
-  for (let i = 0; i < caught.length; i++) {
-    caught[i] = parseInt(caught[i]);
+    caught = caught.split(",");
+    for (let i = 0; i < caught.length; i++) {
+      caught[i] = parseInt(caught[i]);
+    }
+  } else {
+    caught = [];
   }
 } else {
   caught = [];
@@ -258,12 +264,11 @@ function previous() {
   pokemonNumber = pokemonNumber - 1;
   showPokedex();
 }
-function ToggleDex(){
-  if (masterdex){
+function ToggleDex() {
+  if (masterdex) {
     masterdex = false;
-  }
-  else{
-    masterdex = true
+  } else {
+    masterdex = true;
   }
   showPokedex();
 }
@@ -342,18 +347,19 @@ async function showPokedex() {
       );
     document.getElementById("next").addEventListener("click", next);
   }
-  
+
   document
     .getElementById("pagebuttons")
     .insertAdjacentHTML(
       "beforeend",
       `<input type="checkbox" id="masterdex">Whalen's Pokedex`
     );
-    if (masterdex){
-      document.getElementById('masterdex').click();
-    }
-document.getElementById('masterdex').addEventListener("click", ToggleDex);
-document.querySelector(".search").addEventListener("click", searchValue);}
+  if (masterdex) {
+    document.getElementById("masterdex").click();
+  }
+  document.getElementById("masterdex").addEventListener("click", ToggleDex);
+  document.querySelector(".search").addEventListener("click", searchValue);
+}
 mainMenu();
 
 let numberArray = [];

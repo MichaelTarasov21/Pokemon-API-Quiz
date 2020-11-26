@@ -958,25 +958,31 @@ if (document.cookie != "") {
   var seencaught = document.cookie;
   seencaught = seencaught.split("divider");
   seen = seencaught[0];
-  seen = seen.replace("[", "");
-  seen = seen.replace("]", "");
-  seen = seen.split(",");
 
-  for (var i = 0; i < seen.length; i++) {
-    seen[i] = parseInt(seen[i]);
+  if (seen != "[]") {
+    seen = seen.replace("[", "");
+    seen = seen.replace("]", "");
+    seen = seen.split(",");
+
+    for (var i = 0; i < seen.length; i++) {
+      seen[i] = parseInt(seen[i]);
+    }
+  } else {
+    seen = [];
   }
 
   caught = seencaught[1];
 
-  try {
+  if (caught != '[]') {
     caught.replace("[", "");
     caught.replace("]", "");
-  } catch (_unused) {}
+    caught = caught.split(",");
 
-  caught = caught.split(",");
-
-  for (var _i = 0; _i < caught.length; _i++) {
-    caught[_i] = parseInt(caught[_i]);
+    for (var _i = 0; _i < caught.length; _i++) {
+      caught[_i] = parseInt(caught[_i]);
+    }
+  } else {
+    caught = [];
   }
 } else {
   caught = [];
@@ -1311,10 +1317,10 @@ function _showPokedex() {
             document.getElementById("pagebuttons").insertAdjacentHTML("beforeend", "<input type=\"checkbox\" id=\"masterdex\">Whalen's Pokedex");
 
             if (masterdex) {
-              document.getElementById('masterdex').click();
+              document.getElementById("masterdex").click();
             }
 
-            document.getElementById('masterdex').addEventListener("click", ToggleDex);
+            document.getElementById("masterdex").addEventListener("click", ToggleDex);
             document.querySelector(".search").addEventListener("click", searchValue);
 
           case 12:
