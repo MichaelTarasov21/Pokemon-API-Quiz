@@ -43,8 +43,6 @@ if (document.cookie != "") {
   caught = [];
   seen = [];
 }
-console.log(seen);
-console.log(caught);
 async function searchPokemon(queryurl) {
   //grabing the api, and then turning the api in a json, then we return it
   const response = await fetch(queryurl, ["GET"]); //await means that it waits for the api to load before loading
@@ -234,7 +232,6 @@ function quiz() {
             caught
           )} `;
           document.cookie = `${cookiestring};SameSite=Strict`;
-          console.log(document.cookie);
         }
       } else {
         //if the string isn't equal to it, it's wrong
@@ -246,7 +243,6 @@ function quiz() {
             caught
           )} `;
           document.cookie = `${cookiestring};SameSite=Strict;expires=Fri, 31 Dec 2037 12:00:00 UTC`;
-          console.log(document.cookie);
         }
       }
       DomSelectors.container.innerHTML = `<div><h1 class="identifier" id="${identifier}">${sign}</h1></div><div><h2>Your answer: ${answer}</h2></div><div><h2 class="pokemon-data-name">Correct answer: ${pokemonname}</h2></div><br><input type="submit" id="button" value="Next Question"><br><br><div id='counter'>You got ${amountright} out of ${i} correct</div>`;

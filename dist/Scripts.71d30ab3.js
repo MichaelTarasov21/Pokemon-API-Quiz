@@ -989,9 +989,6 @@ if (document.cookie != "") {
   seen = [];
 }
 
-console.log(seen);
-console.log(caught);
-
 function searchPokemon(_x) {
   return _searchPokemon.apply(this, arguments);
 }
@@ -1213,7 +1210,6 @@ function quiz() {
           caught.push(pokemondata.id);
           cookiestring = "".concat(JSON.stringify(seen), "divider").concat(JSON.stringify(caught), " ");
           document.cookie = "".concat(cookiestring, ";SameSite=Strict");
-          console.log(document.cookie);
         }
       } else {
         //if the string isn't equal to it, it's wrong
@@ -1224,7 +1220,6 @@ function quiz() {
           seen.push(pokemondata.id);
           cookiestring = "".concat(JSON.stringify(seen), "divider").concat(JSON.stringify(caught), " ");
           document.cookie = "".concat(cookiestring, ";SameSite=Strict;expires=Fri, 31 Dec 2037 12:00:00 UTC");
-          console.log(document.cookie);
         }
       }
 
@@ -1390,7 +1385,7 @@ function _getNumber() {
 }
 
 getNumber(); //calls async function(is needed so we can use await)
-},{"./DomSelectors.js":"Scripts/DomSelectors.js","./generations.js":"Scripts/generations.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./DomSelectors.js":"Scripts/DomSelectors.js","./generations.js":"Scripts/generations.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1418,7 +1413,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51122" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57415" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -1594,5 +1589,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","Scripts/index.js"], null)
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","Scripts/index.js"], null)
 //# sourceMappingURL=/Scripts.71d30ab3.js.map
