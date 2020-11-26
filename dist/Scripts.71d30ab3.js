@@ -952,6 +952,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var caught;
 var seen;
+var masterdex = false;
 
 if (document.cookie != "") {
   var seencaught = document.cookie;
@@ -1239,6 +1240,16 @@ function previous() {
   showPokedex();
 }
 
+function ToggleDex() {
+  if (masterdex) {
+    masterdex = false;
+  } else {
+    masterdex = true;
+  }
+
+  showPokedex();
+}
+
 function searchValue() {
   var input = document.querySelector(".input").value.toLowerCase(); //gets user input and lowercases it
 
@@ -1297,9 +1308,16 @@ function _showPokedex() {
               document.getElementById("next").addEventListener("click", next);
             }
 
+            document.getElementById("pagebuttons").insertAdjacentHTML("beforeend", "<input type=\"checkbox\" id=\"masterdex\">Whalen's Pokedex");
+
+            if (masterdex) {
+              document.getElementById('masterdex').click();
+            }
+
+            document.getElementById('masterdex').addEventListener("click", ToggleDex);
             document.querySelector(".search").addEventListener("click", searchValue);
 
-          case 9:
+          case 12:
           case "end":
             return _context3.stop();
         }

@@ -13,6 +13,7 @@ import {
 import "regenerator-runtime/runtime";
 let caught;
 let seen;
+let masterdex = false;
 if (document.cookie != "") {
   let seencaught = document.cookie;
   seencaught = seencaught.split("divider");
@@ -257,6 +258,15 @@ function previous() {
   pokemonNumber = pokemonNumber - 1;
   showPokedex();
 }
+function ToggleDex(){
+  if (masterdex){
+    masterdex = false;
+  }
+  else{
+    masterdex = true
+  }
+  showPokedex();
+}
 function searchValue() {
   const input = document.querySelector(".input").value.toLowerCase(); //gets user input and lowercases it
   if (input > 893) {
@@ -332,8 +342,18 @@ async function showPokedex() {
       );
     document.getElementById("next").addEventListener("click", next);
   }
-  document.querySelector(".search").addEventListener("click", searchValue);
-}
+  
+  document
+    .getElementById("pagebuttons")
+    .insertAdjacentHTML(
+      "beforeend",
+      `<input type="checkbox" id="masterdex">Whalen's Pokedex`
+    );
+    if (masterdex){
+      document.getElementById('masterdex').click();
+    }
+document.getElementById('masterdex').addEventListener("click", ToggleDex);
+document.querySelector(".search").addEventListener("click", searchValue);}
 mainMenu();
 
 let numberArray = [];
