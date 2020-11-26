@@ -239,7 +239,7 @@ function quiz() {
           cookiestring = `${JSON.stringify(seen)}divider${JSON.stringify(
             caught
           )} `;
-          document.cookie = `${cookiestring};SameSite=Strict`;
+          document.cookie = `${cookiestring};SameSite=Strict;expires=Fri, 31 Dec 2037 12:00:00 UTC`;
           console.log(document.cookie);
         }
       }

@@ -1217,7 +1217,7 @@ function quiz() {
         if (!seen.includes(pokemondata.id)) {
           seen.push(pokemondata.id);
           cookiestring = "".concat(JSON.stringify(seen), "divider").concat(JSON.stringify(caught), " ");
-          document.cookie = "".concat(cookiestring, ";SameSite=Strict");
+          document.cookie = "".concat(cookiestring, ";SameSite=Strict;expires=Fri, 31 Dec 2037 12:00:00 UTC");
           console.log(document.cookie);
         }
       }
