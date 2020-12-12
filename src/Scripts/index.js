@@ -433,7 +433,7 @@ async function showPokedex() {
     .getElementById("pagebuttons")
     .insertAdjacentHTML(
       "beforeend",
-      `<input type="checkbox" id="masterdex">Whalen's Pokedex`
+      `<input type="checkbox" id="masterdex">Professor Oak's Pokedex`
     );
   if (masterdex) {
     document.getElementById("masterdex").click();

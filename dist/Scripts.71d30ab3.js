@@ -1320,7 +1320,7 @@ function _showPokedex() {
               document.getElementById("next").addEventListener("click", next);
             }
 
-            document.getElementById("pagebuttons").insertAdjacentHTML("beforeend", "<input type=\"checkbox\" id=\"masterdex\">Whalen's Pokedex");
+            document.getElementById("pagebuttons").insertAdjacentHTML("beforeend", "<input type=\"checkbox\" id=\"masterdex\">Professor Oak's Pokedex");
 
             if (masterdex) {
               document.getElementById("masterdex").click();
@@ -1413,7 +1413,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57415" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53347" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
